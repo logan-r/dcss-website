@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-"""Collect dgl-status files from every server and write them to a local 'dgl-status' file.
+"""Collect dgl-status files from every server, parse them and write 'dgl-status.json'.
 
 Intended to be run every few minutes from cron."""
 
@@ -23,8 +23,6 @@ for server in SERVERS:
     if 'dgl-status' not in server:
         continue
     url = server['dgl-status']
-    if not url: 
-        continue
     response = urllib2.urlopen(url)
     if response.getcode() != 200:
         print "Warning: %s returned status code %s, skipping." % (url, response.getcode())
@@ -44,7 +42,12 @@ for server in SERVERS:
             game['XL'] = split[2].split(',')[0].split(' ')[0][1:]
             game['species'] = split[2].split(' ')[1][:-1][:2]
             game['background'] = split[2].split(' ')[1][:-1][-2:]
-            game['location'] = split[2].split(', ')[1]
+            location = split[2].split(', ')[1]
+            if ':' in location:
+                game['branch'] = location.split(':')[0]
+                game['branchlevel'] = location.split(':')[1]
+            else:
+                game['branch'] = location
         game['termwidth'], game['termheight'] = split[3].split('x')
         game['idle'] = split[4]
         game['viewers'] = split[5]
