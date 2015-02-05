@@ -1,5 +1,5 @@
 [
-    {"name": "crawl.project357.org", "url": "https://crawl.project357.org/", "admins": ["chequers"], "latlongdecimal": [-33.86785, 151.20732], "location": "Sydney, Australia", "shortname": "CPO", "dgl-status": "https://crawl.project357.org/"},
+    {"name": "crawl.project357.org", "url": "https://crawl.project357.org/", "admins": ["chequers"], "latlongdecimal": [-33.86785, 151.20732], "location": "Sydney, Australia", "shortname": "CPO", "dgl-status": "https://crawl.project357.org/dgl-status"},
     {"name": "crawl.akrasiac.org", "url": "http://crawl.akrasiac.org/", "admins": ["rax", "|amethyst"], "latlongdecimal": [33.44838, -112.07404], "location": "Arizona, USA", "shortname": "CAO", "dgl-status": "http://crawl.akrasiac.org/cgi-bin/dgl-status/index.html"},
     {"name": "crawl.berotato.org", "url": "http://crawl.berotato.org/", "admins": ["johnstein"], "latlongdecimal": [33.749, -84.38798], "location": "Georgia, USA", "shortname": "CBRO", "dgl-status": "http://crawl.berotato.org/cgi-bin/dgl-status"},
     {"name": "crawl.s-z.org", "url": "http://crawl.s-z.org/", "admins": ["|amethyst"], "latlongdecimal": [33.749, -84.38798], "location": "Georgia, USA", "shortname": "CSZO", "dgl-status": "http://dobrazupa.org/cgi-bin/dgl-status"},
