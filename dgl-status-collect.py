@@ -11,13 +11,13 @@ import urllib2
 if len(sys.argv) != 3:
     print 'error: incorrect number of arguments'
     print 'usage: %s servers.json outfile' % sys.argv[0]
-    print 'eg: %s /var/www/servers.json /var/www/dgl-status' % sys.argv[0]
+    print 'eg: %s /var/www/servers.json /var/www/dgl-status.json' % sys.argv[0]
     sys.exit(1)
 
-LOCAL_FILE = sys.argv[2]
+OUTFILE = sys.argv[2]
 SERVERS = json.load(open(sys.argv[1], 'r'))
 
-content = ''
+games = []
 
 for server in SERVERS:
     if 'dgl-status' not in server:
@@ -32,8 +32,23 @@ for server in SERVERS:
         if not 3 < line.count('#') < 7:
             print "Warning: ignoring line '%s' from %s (doesn't have 4-6 # characters)" % (line, url)
             continue
-        content += line
-        content += '\n'
+        split = line.split('#')
+        game = {}
+        game['name'] = split[0]
+        game['rawversion'] = split[1]
+        if 'trunk' in split[1] or 'git' in split[1]:
+            game['version'] = 'Trunk'
+        elif '-' in split[1]:
+            game['version'] = split[1].split('-', 1)[1]
+        if split[2]:
+            game['XL'] = split[2].split(',')[0].split(' ')[0][1:]
+            game['species'] = split[2].split(' ')[1][:-1][:2]
+            game['background'] = split[2].split(' ')[1][:-1][-2:]
+            game['location'] = split[2].split(', ')[1]
+        game['termwidth'], game['termheight'] = split[3].split('x')
+        game['idle'] = split[4]
+        game['viewers'] = split[5]
+        games.append(game)
 
-with open(LOCAL_FILE, 'w') as f:
-    f.write(content)
+# compact dump format
+json.dump(games, open(OUTFILE, 'w'), separators=(',', ':'))
