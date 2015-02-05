@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+    <head>
+        <!-- Latest compiled and minified CSS -->
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
+        <link rel="stylesheet" href="bootstrap.min.css">
+
+        <!-- Optional theme -->
+        <!--
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+        -->
+
+        <!-- Latest compiled and minified JavaScript -->
+        <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body style="background: black;">
+        <div class="container">
+            <h1 class="text-center" title="* Well, somewhat original."><a href="index.htm">Dungeon Crawl Stone Soup<br><small>An Original* Roguelike</small></a></h1>
+
+            <br>
+            <h2 class="text-center">Download</h2>
+
+            <a name="windows"></a>
+            <h3>Windows</h3>
+            <ul>
+                <li><a href="http://sourceforge.net/projects/crawl-ref/files/Stone%20Soup/0.15.2/stone_soup-0.15.2-tiles-win32.zip/download">Download Tiles Version</a></li>
+                <li><a href="http://sourceforge.net/projects/crawl-ref/files/Stone%20Soup/0.15.2/stone_soup-0.15.2-win32.zip/download">Download Console Version</a></li>
+            </ul>
+
+            <a name="osx"></a>
+            <h3>OS X</h3>
+            <ul>
+                <li><a href="http://crawl.develz.org/release/stone_soup-0.15.0-tiles-macosx.zip">Download Tiles Version</a></li>
+                <li><a href="http://crawl.develz.org/release/stone_soup-0.15.0-console-macosx.zip">Download Console Version</a></li>
+            </ul>
+
+            <h3><a name="android">Android</a></h3>
+            <ul>
+                <li><a href="http://sourceforge.net/projects/crawl-ref/files/Stone%20Soup/0.15.2/crawl_tiles_android-0.15.2.apk/download">Download Tiles Version</a></li>
+                <li>Download Console Version <em>(current unavailable!)</em></li>
+            </ul>
+
+            <a name="linux"></a>
+            <h3>Linux</h3>
+            <p>A version of DCSS may be available in your distribution's package repository (look for a package 'crawl' or similar), but beware! The version could be pretty old. Remember, you can always <a href="#source">build from source</a>.</p>
+            <h4>Ubuntu, Debian &amp; other Debian-derivatives</h4>
+            <p>DCSS packages are available for i386, amd64 and armel architectures. Follow these instructions:</p>
+            <pre>echo 'deb http://crawl.develz.org/debian crawl 0.15' | sudo tee /etc/apt/sources.list # Install the source repository
+wget http://crawl.develz.org/debian/pubkey -O - | sudo apt-key add - # Install the DCSS signing key
+sudo apt-get update # update your package list
+sudo apt-get install crawl # install console version
+sudo apt-get install crawl-tiles # install tiles version</pre>
+            </ul>
+            <h4>Unofficial packages for Fedora 21/20</h4>
+            <p>Player BlasterBlade has provided Fedora packages for Crawl (tiles and console builds) in the openSUSE Build System repository. To install the tiles version, run the following (for Fedora 20, replace the 21 in the URL):</p>
+            <pre>cd /etc/yum.repos.d/
+sudo wget http://download.opensuse.org/repositories/home:nazar554/Fedora_21/home:nazar554.repo # Install the source repository
+sudo yum install crawl-sdl crawl-data # install tiles version
+sudo yum install crawl-console crawl-data # install console version</pre>
+
+            <a name="source"></a>
+            <h3>Source Code</h3>
+            <p>If you'd like to compile DCSS yourself (or make changes...), you can download the git repository here: <a href="https://gitorious.org/crawl/crawl/source/HEAD">https://gitorious.org/crawl/crawl/source/HEAD</a>. For help using git, check out the <a href="https://gitorious.org/crawl/crawl/source/HEAD:crawl-ref/docs/develop/git/quickstart.txt">quickstart guide</a>. For help compiling DCSS, check <a href="https://gitorious.org/crawl/crawl/source/HEAD:crawl-ref/INSTALL.txt">INSTALL.txt</a>.</p>
+
+            <hr>
+            <p class="small text-right">You are too berserk!</p>
+        </div>
+    </body>
+</html>
