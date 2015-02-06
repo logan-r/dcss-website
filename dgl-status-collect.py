@@ -17,41 +17,63 @@ if len(sys.argv) != 3:
 OUTFILE = sys.argv[2]
 SERVERS = json.load(open(sys.argv[1], 'r'))
 
-games = []
+SP_TABLE = {'Mf': 'Merfolk', 'Ke': 'Kenku*', 'MD': 'Mountain Dwarf*', 'Og': 'Ogre', 'Na': 'Naga', 'DD': 'Deep Dwarf', 'DE': 'Deep Elf', 'Tr': 'Troll', 'Mu': 'Mummy', 'GE': 'Grey Elf*', 'VS': 'Vine Stalker', 'HO': 'Hill Orc', 'Sp': 'Spriggan', 'Te': 'Tengu', 'HD': 'Hill Dwarf*', 'HE': 'High Elf', 'El': 'Elf*', 'OM': 'Ogre-Mage*', 'Dj': 'Djinni*', 'Gr': 'Gargoyle', 'Ko': 'Kobold', 'Dg': 'Demigod', 'Gh': 'Ghoul', 'Fo': 'Formicid', 'Ce': 'Centaur', 'Hu': 'Human', 'Vp': 'Vampire', 'Op': 'Octopode', 'Mi': 'Minotaur', 'Pl': 'Plutonian*', 'LO': 'Lava Orc*', 'Gn': 'Gnome*', 'Ha': 'Halfling', 'Dr': 'Draconian', 'Ds': 'Demonspawn', 'SE': 'Sludge Elf*', 'Fe': 'Felid'}
+BG_TABLE = {'Pr': 'Priest*', 'CK': 'Chaos Knight', 'AE': 'Air Elementalist', 'DK': 'Death Knight', 'Cj': 'Conjurer', 'EE': 'Earth Elementalist', 'Mo': 'Monk', 'AM': 'Arcane Marksman', 'Ne': 'Necromancer', 'Su': 'Summoner', 'VM': 'Venom Mage', 'Sk': 'Skald', 'Re': 'Reaver*', 'Pa': 'Paladin*', 'FE': 'Fire Elementalist', 'Th': 'Thief*', 'Cr': 'Crusader*', 'St': 'Stalker*', 'IE': 'Ice Elementalist', 'Be': 'Berserker', 'En': 'Enchanter', 'Wn': 'Wanderer', 'Jr': 'Jester*', 'Hu': 'Hunter', 'AK': 'Abyssal Knight', 'As': 'Assassin', 'Ar': 'Artificer', 'Wr': 'Warper', 'Fi': 'Fighter', 'Gl': 'Gladiator', 'Tm': 'Transmuter', 'Wz': 'Wizard', 'He': 'Healer'}
 
-for server in SERVERS:
-    if 'dgl-status' not in server:
-        continue
-    url = server['dgl-status']
-    response = urllib2.urlopen(url)
-    if response.getcode() != 200:
-        print "Warning: %s returned status code %s, skipping." % (url, response.getcode())
-    for line in response.read().splitlines():
-        if not 3 < line.count('#') < 7:
-            print "Warning: ignoring line '%s' from %s (doesn't have 4-6 # characters)" % (line, url)
+def main():
+    dump_games(get_games(SERVERS), OUTFILE)
+
+def parse_line(line):
+    if not 3 < line.count('#') < 7:
+        return None
+    split = line.split('#')
+    game = {}
+    game['name'] = split[0]
+    game['rawversion'] = split[1]
+    if 'trunk' in split[1] or 'git' in split[1]:
+        game['version'] = 'Trunk'
+    elif '-' in split[1]:
+        game['version'] = split[1].split('-', 1)[1]
+    if split[2]:
+        game['XL'] = split[2].split(',')[0].split(' ')[0][1:]
+        game['sp'] = split[2].split(' ')[1][:-1][:2]
+        game['species'] = SP_TABLE.get(game['sp'], game['sp'])
+        game['bg'] = split[2].split(' ')[1][:-1][-2:]
+        game['background'] = BG_TABLE.get(game['bg'], game['bg'])
+        location = split[2].split(', ')[1]
+        if ':' in location:
+            game['branch'] = location.split(':')[0]
+            game['branchlevel'] = location.split(':')[1]
+        else:
+            game['branch'] = location
+    game['termwidth'], game['termheight'] = split[3].split('x')
+    game['idle'] = split[4]
+    game['viewers'] = split[5]
+
+    return game
+
+def get_games(servers):
+    games = []
+
+    for server in servers:
+        url = server.get('dgl-status')
+        if not url:
             continue
-        split = line.split('#')
-        game = {}
-        game['name'] = split[0]
-        game['rawversion'] = split[1]
-        if 'trunk' in split[1] or 'git' in split[1]:
-            game['version'] = 'Trunk'
-        elif '-' in split[1]:
-            game['version'] = split[1].split('-', 1)[1]
-        if split[2]:
-            game['XL'] = split[2].split(',')[0].split(' ')[0][1:]
-            game['species'] = split[2].split(' ')[1][:-1][:2]
-            game['background'] = split[2].split(' ')[1][:-1][-2:]
-            location = split[2].split(', ')[1]
-            if ':' in location:
-                game['branch'] = location.split(':')[0]
-                game['branchlevel'] = location.split(':')[1]
-            else:
-                game['branch'] = location
-        game['termwidth'], game['termheight'] = split[3].split('x')
-        game['idle'] = split[4]
-        game['viewers'] = split[5]
-        games.append(game)
+        response = urllib2.urlopen(url, timeout=5)
+        if response.getcode() != 200:
+            print "Warning: %s returned status code %s, skipping." % (url, response.getcode())
+        for line in response.read().splitlines():
+            game = parse_line(line)
+            if not game:
+                print "Warning: ignoring line '%s' from %s (doesn't have 4-6 # characters)" % (line, url)
+                continue
+            games.append(game)
 
-# compact dump format
-json.dump(games, open(OUTFILE, 'w'), separators=(',', ':'))
+    return games
+
+def dump_games(games, dest):
+    # compact dump format
+    json.dump(games, open(dest, 'w'), separators=(',', ':'))
+
+if __name__ == '__main__':
+    main()
