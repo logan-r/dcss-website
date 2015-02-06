@@ -44,7 +44,11 @@ def parse_location(location):
     branch = BR_TABLE.get(br, br)
 
     if br in ('D', 'Orc', 'Elf', 'Lair', 'Depths', 'Swamp', 'Shoals', 'Slime', 'Snake', 'Spider', 'Vaults', 'Crypt', 'Tomb', 'Dis', 'Geh', 'Coc', 'Tar', 'Zot', 'Abyss'):
-        humanreadable = "on level {} of the {}".format(branchlevel, branch)
+        if branchlevel != '0':
+            humanreadable = "on level {} of the {}".format(branchlevel, branch)
+        else:
+            # zot defense or sprint
+            humanreadable = "in the {}".format(branch)
     elif br in ('Zig',):
         humanreadable = "on level {} of a {}".format(branchlevel, branch)
     elif br in ('Lab', 'Bazaar', 'WizLab', 'Sewer', 'Bailey', 'Volcano', 'Trove'):
@@ -71,6 +75,12 @@ def parse_line(line):
         game['version'] = 'Trunk'
     elif '-' in split[1]:
         game['version'] = split[1].split('-', 1)[1]
+    if 'zd' in split[1]:
+        game['type'] = 'Zot Defence'
+    elif 'sprint' in split[1]:
+        game['type'] = 'Sprint'
+    else:
+        game['type'] = 'Crawl'
     if split[2]: # sometimes this field is blank
         game['XL'] = split[2].split(',')[0].split(' ')[0][1:]
         game['sp'] = split[2].split(' ')[1][:-1][:2]
