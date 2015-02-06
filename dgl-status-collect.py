@@ -108,6 +108,9 @@ def get_games(servers):
             if not game:
                 print "Warning: ignoring line '%s' from %s (doesn't have 4-6 # characters)" % (line, url)
                 continue
+            game['source'] = server['shortname']
+            if 'watchurl' in server:
+                game['watchurl'] = server['watchurl'].format(name=game['name'])
             games.append(game)
 
     return games
