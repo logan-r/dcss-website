@@ -1,6 +1,7 @@
 <!DOCTYPE html>
     <head>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="underscore.js"></script> <!-- used only a little -->
         <!-- Latest compiled and minified CSS -->
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
         <link rel="stylesheet" href="bootstrap-3.3.2-dist/css/bootstrap.min.darkly.css">
@@ -28,12 +29,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
         <script>
-            $(document).ready(function() {  
-                loadData();  
-            });  
-
             // http://www.davidjuth.com/rest-demo-jquery-rss.aspx
-            function loadData()
+            $( function()
             {
                 $("#feedContainer").empty();
 
@@ -48,10 +45,40 @@
                         var html = "<a href=\"" + link + "\"><li>" + title + "</a></li>";  
             
                         $('#newsContainer').append(html);  
-                    });  
+                    });
                     $('#newsContainer').append("</ul>");
-                });  
-            }         
+                });
+            });
+        </script>
+
+        <script>
+            numCaptions = 3
+            captions = [];
+            function getPlayerCaptions() {
+                $.get("dgl-status.json", function(data) {
+                    // we only want candidates with full info (some entries lack xl/race/background/location, so test for xl)
+                    // also check they have a species -- player might be on start screen, which is boring
+                    // and that there's a watch url
+                    candidates = data.filter(function(element) { return "XL" in element && element["species"] != '' && "watchurl" in element});
+                    // if there are enough candidates with spectators, pick from those (other viewers is probably a good sign)
+                    popular_candidates = candidates.filter(function(element) { return element['viewers'] > 0});
+                    if (popular_candidates.length >= numCaptions) {
+                        console.log("using popular candiates");
+                        candiates = popular_candidates;
+                    }
+                    selected = _.sample(candidates, numCaptions);
+                    for (var i = 0; i < numCaptions; i++) {
+                        c = selected[i];
+                        $( "#now-playing-" + i + "-heading" ).html("Now playing: " + c["name"]);
+                        loc = c["location"];
+                        loc = loc.charAt(0).toUpperCase() + loc.slice(1); // haaaacky
+                        $( "#now-playing-" + i + "-text" ).html("Level " + c["XL"] + " " + c["species"] + " " + c["background"] + "<br>" + loc);
+                        $( "#now-playing-" + i + "-link" ).html("Watch live now.");
+                        $( "#now-playing-" + i + "-link" ).attr("href", c["watchurl"]);
+                    }
+                });
+            }
+            $( getPlayerCaptions() );
         </script>
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -78,13 +105,10 @@
                         <img src="splashimgs/dcss-splash-01.png">
                         <div class="carousel-caption">
                             <div class="panel panel-default panel-transparent" style="width:50%;">
-                                <div class="panel-heading">Now Playing: Kramin</div>
+                                <div id="now-playing-0-heading" class="panel-heading">Loading game...</div>
                                 <div class="panel-body">
-                                    <p>Level 9 Octopode Transmuter<br>
-                                    Has seven runes<br>
-                                    Wielding "Eos", a +11 morningstar<br>
-                                    Has 2731 gold<br>
-                                    <a href="#">Click here to watch.</a><br>
+                                    <p id="now-playing-0-text"></p>
+                                    <a id="now-playing-0-link" href="#"></a><br>
                                 </div>
                             </div>
                         </div>
@@ -93,14 +117,10 @@
                         <img src="splashimgs/dcss-splash-02.png">
                         <div class="carousel-caption">
                             <div class="panel panel-default panel-transparent" style="width:50%;">
-                                <div class="panel-heading">Now Playing: chequers</div>
+                                <div id="now-playing-1-heading" class="panel-heading">Loading game...</div>
                                 <div class="panel-body">
-                                    <p>Level 16 Minotaur Berserker<br>
-                                    Exalted by Trog<br>
-                                    Wielding a +4 eveningstar of electrocution<br>
-                                    On Level 4 of The Depths<br>
-                                    <a href="#">Click here to watch.</a><br>
-                                    </p>
+                                    <p id="now-playing-1-text"></p>
+                                    <a id="now-playing-1-link" href="#"></a><br>
                                 </div>
                             </div>
                         </div>
@@ -109,13 +129,10 @@
                         <img src="splashimgs/dcss-splash-03.png">
                         <div class="carousel-caption">
                             <div class="panel panel-default panel-transparent" style="width:50%;">
-                                <div class="panel-heading">Now Playing: cribozai</div>
+                                <div id="now-playing-2-heading" class="panel-heading">Loading game...</div>
                                 <div class="panel-body">
-                                    <p>Level 27 Merfolk Wizard<br>
-                                    On Level 27 of a Ziggurat<br>
-                                    In lich form, slightly contaminated, fast, constricted<br>
-                                    <a href="#">Click here to watch.</a><br>
-                                    </p>
+                                    <p id="now-playing-2-text"></p>
+                                    <a id="now-playing-2-link" href="#"></a><br>
                                 </div>
                             </div>
                         </div>
