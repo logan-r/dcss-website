@@ -127,7 +127,7 @@ def get_games(servers):
 
 def dump_games(games, dest):
     # compact dump format
-    json.dump(games, open(dest, 'w'), separators=(',', ':'))
+    json.dump(games, open(dest, 'w'), indent=1)
 
 if __name__ == '__main__':
     main()
