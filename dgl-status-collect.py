@@ -106,7 +106,11 @@ def get_games(servers):
         url = server.get('dgl-status')
         if not url:
             continue
-        response = urllib2.urlopen(url, timeout=5)
+        try:
+            response = urllib2.urlopen(url, timeout=5)
+        except urllib2.URLError:
+            print "Warning: couldn't grab %s" % url
+            continue
         if response.getcode() != 200:
             print "Warning: %s returned status code %s, skipping." % (url, response.getcode())
         for line in response.read().splitlines():
