@@ -14,15 +14,9 @@ if len(sys.argv) != 3:
     print 'eg: %s /var/www/servers.json /var/www/dgl-status.json' % sys.argv[0]
     sys.exit(1)
 
-OUTFILE = sys.argv[2]
-SERVERS = json.load(open(sys.argv[1], 'r'))
-
 SP_TABLE = {'Mf': 'Merfolk', 'Ke': 'Kenku*', 'MD': 'Mountain Dwarf*', 'Og': 'Ogre', 'Na': 'Naga', 'DD': 'Deep Dwarf', 'DE': 'Deep Elf', 'Tr': 'Troll', 'Mu': 'Mummy', 'GE': 'Grey Elf*', 'VS': 'Vine Stalker', 'HO': 'Hill Orc', 'Sp': 'Spriggan', 'Te': 'Tengu', 'HD': 'Hill Dwarf*', 'HE': 'High Elf', 'El': 'Elf*', 'OM': 'Ogre-Mage*', 'Dj': 'Djinni*', 'Gr': 'Gargoyle', 'Ko': 'Kobold', 'Dg': 'Demigod', 'Gh': 'Ghoul', 'Fo': 'Formicid', 'Ce': 'Centaur', 'Hu': 'Human', 'Vp': 'Vampire', 'Op': 'Octopode', 'Mi': 'Minotaur', 'Pl': 'Plutonian*', 'LO': 'Lava Orc*', 'Gn': 'Gnome*', 'Ha': 'Halfling', 'Dr': 'Draconian', 'Ds': 'Demonspawn', 'SE': 'Sludge Elf*', 'Fe': 'Felid'}
 BG_TABLE = {'Pr': 'Priest*', 'CK': 'Chaos Knight', 'AE': 'Air Elementalist', 'DK': 'Death Knight', 'Cj': 'Conjurer', 'EE': 'Earth Elementalist', 'Mo': 'Monk', 'AM': 'Arcane Marksman', 'Ne': 'Necromancer', 'Su': 'Summoner', 'VM': 'Venom Mage', 'Sk': 'Skald', 'Re': 'Reaver*', 'Pa': 'Paladin*', 'FE': 'Fire Elementalist', 'Th': 'Thief*', 'Cr': 'Crusader*', 'St': 'Stalker*', 'IE': 'Ice Elementalist', 'Be': 'Berserker', 'En': 'Enchanter', 'Wn': 'Wanderer', 'Jr': 'Jester*', 'Hu': 'Hunter', 'AK': 'Abyssal Knight', 'As': 'Assassin', 'Ar': 'Artificer', 'Wr': 'Warper', 'Fi': 'Fighter', 'Gl': 'Gladiator', 'Tm': 'Transmuter', 'Wz': 'Wizard', 'He': 'Healer'}
 BR_TABLE = {'D': 'Dungeon', 'Orc': 'Orcish Mines', 'Elf': 'Elven Halls', 'Lair': 'Lair of the Beasts', 'Depths': 'Depths', 'Swamp': 'Swamp', 'Shoals': 'Shoals', 'Spider': 'Spider Nest', 'Snake': 'Snake Pit', 'Slime': 'Slime Pits', 'Vaults': 'Vaults', 'Crypt': 'Crypt', 'Tomb': 'Tomb of the Ancients', 'Dis': 'Iron City of Dis', 'Geh': 'Gehenna', 'Coc': 'Cocytus', 'Tar': 'Tartarus', 'Zot':'Realm of Zot', 'Abyss': 'Abyss', 'Zig': 'Ziggurat', 'Lab': 'Labyrinth', 'Bazaar': 'Bazaar', 'WizLab': 'Wizard\'s Laboratory', 'Sewer': 'Sewer', 'Bailey': 'Bailey', 'Ossuary': 'Ossuary', 'IceCv': 'Ice Cave', 'Volcano': 'Volcano', 'Hell': 'Vestibule of Hell', 'Temple': 'Ecumenical Temple', 'Pan': 'Pandemonium', 'Trove': 'Treasure Trove'}
-
-def main():
-    dump_games(get_games(SERVERS), OUTFILE)
 
 def parse_location(location):
     """Parse raw location string and return (branch, branchlevel, humanreadable).
@@ -70,7 +64,6 @@ def parse_line(line):
     split = line.split('#')
     game = {}
     game['name'] = split[0]
-    game['rawversion'] = split[1]
     if 'trunk' in split[1] or 'git' in split[1]:
         game['version'] = 'Trunk'
     elif '-' in split[1]:
@@ -89,8 +82,7 @@ def parse_line(line):
         game['background'] = BG_TABLE.get(game['bg'], game['bg'])
         location = split[2].split(', ')[1]
         game['branch'], game['branchlevel'], game['location'] = parse_location(location)
-    if 'x' in split[3]: # sometimes this field is missing
-        game['termwidth'], game['termheight'] = split[3].split('x')
+    if 'x' in split[3]: # indicates the field is terminal dimensions, eg '80x24'. Sometimes this field is missing
         game['idle'] = split[4]
         game['viewers'] = split[5]
     else:
@@ -134,4 +126,11 @@ def dump_games(games, dest):
     json.dump(games, open(dest, 'w'), indent=1)
 
 if __name__ == '__main__':
-    main()
+    OUTFILE = sys.argv[2]
+    try:
+        SERVERS = json.load(open(sys.argv[1], 'r'))
+    except Exception:
+        print "Error: couldn't load %s!" % SERVERS
+        sys.exit(1)
+
+    dump_games(get_games(SERVERS), OUTFILE)
