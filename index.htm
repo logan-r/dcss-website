@@ -52,33 +52,61 @@
         </script>
 
         <script>
-            numCaptions = 3
-            captions = [];
-            function getPlayerCaptions() {
-                $.get("dgl-status.json", function(data) {
-                    // we only want candidates with full info (some entries lack xl/race/background/location, so test for xl)
-                    // also check they have a species -- player might be on start screen, which is boring
-                    // and that there's a watch url
+            function setPlayerCaptions(data) {
+                    n = $( "#tiles div" ).length;
+                    // Preconditions:
+                    // We only want candidates with full info (some entries lack xl/race/background/location, so test for xl)
+                    // Check they have a species -- player might be on start screen
+                    // And we need a watch url
                     candidates = data.filter(function(element) { return "XL" in element && element["species"] != '' && "watchurl" in element});
-                    // if there are enough candidates with spectators, pick from those (other viewers is probably a good sign)
-                    popular_candidates = candidates.filter(function(element) { return element['viewers'] > 0});
-                    if (popular_candidates.length >= numCaptions) {
-                        console.log("using popular candiates");
-                        candiates = popular_candidates;
+                    // There are a two competing goals with the candidate selection:
+                    // * random each refresh
+                    // * picks the best candidates
+                    // To balance this, partition the candidate list into good, ok & bad groups, and select from each in turn as required
+                    // Good: has spectators
+                    // OK: idle < 5 secs
+                    // Bad: everything else
+                    good_candidates = []
+                    ok_candidates = []
+                    bad_candidates = []
+                    _.each(candidates, function(c) {
+                        if (c['viewers'] > 0) {
+                            good_candidates.push(c);
+                        } else if (c['idle'] < 5) {
+                            ok_candidates.push(c);
+                        } else {
+                            bad_candidates.push(c);
+                        }
+                        });
+                    selected_candidates = _.sample(good_candidates, n);
+                    if (selected_candidates.length < n) {
+                        n = n - selected_candidates.length;
+                        selected_candidates = selected_candidates.concat(_.sample(ok_candidates, n));
+                        if (selected_candidates.length < n) {
+                            n = n - selected_candidates.length;
+                            selected_candidates = selected_candidates.concat(_.sample(bad_candidates, n));
+                         }
                     }
-                    selected = _.sample(candidates, numCaptions);
-                    for (var i = 0; i < numCaptions; i++) {
-                        c = selected[i];
-                        $( "#now-playing-" + i + "-heading" ).html("Now playing: " + c["name"]);
-                        loc = c["location"];
-                        loc = loc.charAt(0).toUpperCase() + loc.slice(1); // haaaacky
-                        $( "#now-playing-" + i + "-text" ).html("Level " + c["XL"] + " " + c["species"] + " " + c["background"] + "<br>" + loc);
-                        $( "#now-playing-" + i + "-link" ).html("Watch live now.");
-                        $( "#now-playing-" + i + "-link" ).attr("href", c["watchurl"]);
+                    // Note that we might not have enough candidates at this point
+                    if (selected_candidates.length !=  $( "#tiles div" ).length) {
+                        console.log("Warning: only found " + selected_candidates.length + " candidates.");
                     }
-                });
+
+                    captions = []
+                    _.each(selected_candidates, function(c) {
+                        captions.push([c["name"], "Level " + c["XL"] + " " + c["species"] + " " + c["background"] + "<br>" + c["location"],  c["watchurl"]]);
+                        });
+
+                    $( "#tiles div" ).each( function(i) {
+                        caption = captions.pop();
+                        $( this ).children( ".dcss-tile-heading" ).html(caption[0]);
+                        $( this ).children( ".dcss-tile-body" ).html(caption[1]);
+                        $( this ).children( ".dcss-tile-link" ).attr('href', caption[2]);
+                    });
+
+                    $( "#dcss-online-link" ).text("See all " + candidates.length + " online games...");
             }
-            $( getPlayerCaptions() );
+            $( $.get("dgl-status.json", setPlayerCaptions ));
         </script>
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -96,59 +124,69 @@
                 <br>
             </center>
 
-            <center>
-            <div id="carousel-splash" class="carousel slide" data-ride="carousel">
-
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner" role="listbox">
-                    <div class="item active">
-                        <img src="splashimgs/dcss-splash-01.png">
-                        <div class="carousel-caption">
-                            <div class="panel panel-default panel-transparent" style="width:50%;">
-                                <div id="now-playing-0-heading" class="panel-heading">Loading game...</div>
-                                <div class="panel-body">
-                                    <p id="now-playing-0-text"></p>
-                                    <a id="now-playing-0-link" href="#"></a><br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="splashimgs/dcss-splash-02.png">
-                        <div class="carousel-caption">
-                            <div class="panel panel-default panel-transparent" style="width:50%;">
-                                <div id="now-playing-1-heading" class="panel-heading">Loading game...</div>
-                                <div class="panel-body">
-                                    <p id="now-playing-1-text"></p>
-                                    <a id="now-playing-1-link" href="#"></a><br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="splashimgs/dcss-splash-03.png">
-                        <div class="carousel-caption">
-                            <div class="panel panel-default panel-transparent" style="width:50%;">
-                                <div id="now-playing-2-heading" class="panel-heading">Loading game...</div>
-                                <div class="panel-body">
-                                    <p id="now-playing-2-text"></p>
-                                    <a id="now-playing-2-link" href="#"></a><br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="row" id="tiles" style="overflow: hidden;">
+                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-01.png'); background-position: center;">
+                    <p class="lead text-center dcss-tile-heading"></p>
+                    <p class="text-center dcss-tile-body"></p>
+                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
                 </div>
-
-                <!-- Controls -->
-                <a class="left carousel-control" href="#carousel-splash" role="button" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#carousel-splash" role="button" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </center>
+                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-02.png'); background-position: center;">
+                    <p class="lead text-center dcss-tile-heading"></p>
+                    <p class="text-center dcss-tile-body"></p>
+                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-03.png'); background-position: center;">
+                    <p class="lead text-center dcss-tile-heading"></p>
+                    <p class="text-center dcss-tile-body"></p>
+                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-04.png'); background-position: center;">
+                    <p class="lead text-center dcss-tile-heading"></p>
+                    <p class="text-center dcss-tile-body"></p>
+                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-05.png'); background-position: center;">
+                    <p class="lead text-center dcss-tile-heading"></p>
+                    <p class="text-center dcss-tile-body"></p>
+                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-06.png'); background-position: center;">
+                    <p class="lead text-center dcss-tile-heading"></p>
+                    <p class="text-center dcss-tile-body"></p>
+                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-07.png'); background-position: center;">
+                    <p class="lead text-center dcss-tile-heading"></p>
+                    <p class="text-center dcss-tile-body"></p>
+                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-08.png'); background-position: center;">
+                    <p class="lead text-center dcss-tile-heading"></p>
+                    <p class="text-center dcss-tile-body"></p>
+                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-09.png'); background-position: center;">
+                    <p class="lead text-center dcss-tile-heading"></p>
+                    <p class="text-center dcss-tile-body"></p>
+                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-10.png'); background-position: center;">
+                    <p class="lead text-center dcss-tile-heading"></p>
+                    <p class="text-center dcss-tile-body"></p>
+                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-01.png'); background-position: center;">
+                    <p class="lead text-center dcss-tile-heading"></p>
+                    <p class="text-center dcss-tile-body"></p>
+                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-02.png'); background-position: center;">
+                    <p class="lead text-center dcss-tile-heading"></p>
+                    <p class="text-center dcss-tile-body"></p>
+                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
+                </div>
+            </div>
+            <a href="watch.htm"><p id="dcss-online-link">See all games...</p></a>
 
             <h2>Latest News</h2>
             <div class="container" id="newsContainer"></div>
