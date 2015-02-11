@@ -1,5 +1,7 @@
 # DCSS Website Readme
 
+Currently visible at https://crawl.project357.org/static/dcss-web/index.htm
+
 This is a small readme to describe what everything is for/how it works.
 
 For background information, see the crawl-ref-discuss thread "Proposal: website visual refresh" from 24 Jan 2015.
