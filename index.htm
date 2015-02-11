@@ -72,24 +72,26 @@
                          }
                     }
                     // Note that we might not have enough candidates at this point
-                    if (selected_candidates.length !=  $( "#tiles div" ).length) {
+                    if (selected_candidates.length <  $( "#tiles div" ).length) {
                         console.log("Warning: only found " + selected_candidates.length + " candidates.");
                     }
                     selected_candidates = _.shuffle(selected_candidates);
 
-                    _.each(selected_candidates, function(c) {
-                        a = $( "<div>" );
+                    for (var i = 0; i < selected_candidates.length; i++) {
+                        c = selected_candidates[i];
                         e = $( "<div>" );
-                        a.append(e);
-                        a.addClass("col-lg-3 col-md-4 col-sm-6 text-center");
-                        e.css("background-image", "url('splashimgs/dcss-splash-01.png')");
+                        e.css("background-image", "url('splashimgs/dcss-splash-" + i + ".png')");
                         e.css("background-position", "center center");
                         e.css("border-radius", "5px");
                         e.append("<p class=\"lead\">" + c["name"] + "</p>");
                         e.append("<p>" + "Level " + c["XL"] + " " + c["species"] + " " + c["background"] + "<br>" + c["location"] + "</p>");
                         e.append("<p><a href=\"" + c["watchurl"] + "\">Watch Now</a></p>");
-                        $( "#tiles" ).append(a);
-                    });
+
+                        outer = $( "<div>" );
+                        outer.addClass("col-lg-3 col-md-4 col-sm-6 text-center");
+                        outer.append(e);
+                        $( "#tiles" ).append(outer);
+                    }
 
                     $( "#dcss-online-link" ).text("See all " + candidates.length + " online games...");
             }
