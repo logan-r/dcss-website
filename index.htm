@@ -4,26 +4,10 @@
         <script src="underscore.js"></script> <!-- used only a little -->
         <!-- Latest compiled and minified CSS -->
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
-        <link rel="stylesheet" href="bootstrap-3.3.2-dist/css/bootstrap.min.darkly.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
         <!-- Optional theme -->
-        <!--
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-        -->
-
-        <style>
-        .panel-transparent {
-            background: none;
-        }
-
-        .panel-transparent .panel-heading{
-            background: rgba(122, 130, 136, 0.5)!important;
-        }
-
-        .panel-transparent .panel-body{
-            background: rgba(46, 51, 56, 0.5)!important;
-        }
-        </style>
 
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
@@ -53,7 +37,7 @@
 
         <script>
             function setPlayerCaptions(data) {
-                    n = $( "#tiles div" ).length;
+                    n = 12; // is there a nicer way to hardcode this?
                     // Preconditions:
                     // We only want candidates with full info (some entries lack xl/race/background/location, so test for xl)
                     // Check they have a species -- player might be on start screen
@@ -91,17 +75,20 @@
                     if (selected_candidates.length !=  $( "#tiles div" ).length) {
                         console.log("Warning: only found " + selected_candidates.length + " candidates.");
                     }
+                    selected_candidates = _.shuffle(selected_candidates);
 
-                    captions = []
                     _.each(selected_candidates, function(c) {
-                        captions.push([c["name"], "Level " + c["XL"] + " " + c["species"] + " " + c["background"] + "<br>" + c["location"],  c["watchurl"]]);
-                        });
-
-                    $( "#tiles div" ).each( function(i) {
-                        caption = captions.pop();
-                        $( this ).children( ".dcss-tile-heading" ).html(caption[0]);
-                        $( this ).children( ".dcss-tile-body" ).html(caption[1]);
-                        $( this ).children( ".dcss-tile-link" ).attr('href', caption[2]);
+                        a = $( "<div>" );
+                        e = $( "<div>" );
+                        a.append(e);
+                        a.addClass("col-lg-3 col-md-4 col-sm-6 text-center");
+                        e.css("background-image", "url('splashimgs/dcss-splash-01.png')");
+                        e.css("background-position", "center center");
+                        e.css("border-radius", "5px");
+                        e.append("<p class=\"lead\">" + c["name"] + "</p>");
+                        e.append("<p>" + "Level " + c["XL"] + " " + c["species"] + " " + c["background"] + "<br>" + c["location"] + "</p>");
+                        e.append("<p><a href=\"" + c["watchurl"] + "\">Watch Now</a></p>");
+                        $( "#tiles" ).append(a);
                     });
 
                     $( "#dcss-online-link" ).text("See all " + candidates.length + " online games...");
@@ -111,81 +98,25 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
-    <body style="background: black;">
+    <body>
         <div class="container">
-            <h1 class="text-center" title="* Well, somewhat original."><a href="index.htm">Dungeon Crawl Stone Soup<br><small>An Original* Roguelike</small></a></h1>
+            <div class="page-header">
+                <center>
+                    <img src="logo.png" title="Dungeon Crawl Stone Soup" width="624px" height="120px">
+                </center>
+            </div>
 
             <!-- mention free/open-source? -->
             <p class="lead text-center">A single-player adventure through dungeons filled with dangerous and unfriendly monsters in a quest to find the mystifyingly fabulous Orb of Zot. <a href="about.htm">Read more...</a></p>
-            <center> <!-- XXX: HACKY!!!!!(?) -->
+            <center> <!-- XXX: HACKY!!!!! -->
                 <a href="play.htm" class="btn btn-lg btn-success" role="button">Play Online Now!</a>
                 <br><br>
                 <p class="text-center">Or download for: <a href="download.htm#windows">Windows</a>, <a href="download.htm#osx">OS X</a>, <a href="download.htm#android">Android</a> and <a href="download.htm#linux">Linux</a>.</p>
                 <br>
             </center>
 
-            <div class="row" id="tiles" style="overflow: hidden;">
-                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-01.png'); background-position: center;">
-                    <p class="lead text-center dcss-tile-heading"></p>
-                    <p class="text-center dcss-tile-body"></p>
-                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-02.png'); background-position: center;">
-                    <p class="lead text-center dcss-tile-heading"></p>
-                    <p class="text-center dcss-tile-body"></p>
-                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-03.png'); background-position: center;">
-                    <p class="lead text-center dcss-tile-heading"></p>
-                    <p class="text-center dcss-tile-body"></p>
-                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-04.png'); background-position: center;">
-                    <p class="lead text-center dcss-tile-heading"></p>
-                    <p class="text-center dcss-tile-body"></p>
-                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-05.png'); background-position: center;">
-                    <p class="lead text-center dcss-tile-heading"></p>
-                    <p class="text-center dcss-tile-body"></p>
-                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-06.png'); background-position: center;">
-                    <p class="lead text-center dcss-tile-heading"></p>
-                    <p class="text-center dcss-tile-body"></p>
-                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-07.png'); background-position: center;">
-                    <p class="lead text-center dcss-tile-heading"></p>
-                    <p class="text-center dcss-tile-body"></p>
-                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-08.png'); background-position: center;">
-                    <p class="lead text-center dcss-tile-heading"></p>
-                    <p class="text-center dcss-tile-body"></p>
-                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-09.png'); background-position: center;">
-                    <p class="lead text-center dcss-tile-heading"></p>
-                    <p class="text-center dcss-tile-body"></p>
-                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-10.png'); background-position: center;">
-                    <p class="lead text-center dcss-tile-heading"></p>
-                    <p class="text-center dcss-tile-body"></p>
-                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-01.png'); background-position: center;">
-                    <p class="lead text-center dcss-tile-heading"></p>
-                    <p class="text-center dcss-tile-body"></p>
-                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6" style="background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('splashimgs/dcss-splash-02.png'); background-position: center;">
-                    <p class="lead text-center dcss-tile-heading"></p>
-                    <p class="text-center dcss-tile-body"></p>
-                    <a class="dcss-tile-link" href="#"><p class="text-center">Watch now</p></a>
-                </div>
-            </div>
+            <h2 class="text-center">Live games</h2>
+            <div class="row" id="tiles"></div>
             <a href="watch.htm"><p id="dcss-online-link">See all games...</p></a>
 
             <h2>Latest News</h2>
