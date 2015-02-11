@@ -83,14 +83,30 @@
                         e.css("background-image", "url('splashimgs/dcss-splash-" + i + ".png')");
                         e.css("background-position", "center center");
                         e.css("border-radius", "5px");
+                        e.css("color", "white");
                         e.append("<p class=\"lead\">" + c["name"] + "</p>");
                         e.append("<p>" + "Level " + c["XL"] + " " + c["species"] + " " + c["background"] + "<br>" + c["location"] + "</p>");
                         e.append("<p><a href=\"" + c["watchurl"] + "\">Watch Now</a></p>");
 
                         outer = $( "<div>" );
+                        // Try to make the columnating sensible, and show only 4 tiles for smaller devices
                         outer.addClass("col-lg-3 col-md-4 col-sm-6 text-center");
+                        if (i >= 4) {
+                            outer.addClass("hidden-xs hidden-sm");
+                        }
+                        if (i >= 9) {
+                            outer.addClass("hidden-md");
+                        }
                         outer.append(e);
                         $( "#tiles" ).append(outer);
+                    }
+
+                    // Shuffle the tiles. This randomises the image ordering
+                    // http://jsfiddle.net/C6LPY/2/
+                    var parent = $("#tiles");
+                    var divs = parent.children();
+                    while (divs.length) {
+                        parent.append(divs.splice(Math.floor(Math.random() * divs.length), 1)[0]);
                     }
 
                     $( "#dcss-online-link" ).text("See all " + candidates.length + " online games...");
@@ -104,16 +120,16 @@
         <div class="container">
             <div class="page-header">
                 <center>
-                    <img src="logo.png" title="Dungeon Crawl Stone Soup" width="624px" height="120px">
+                    <a href="index.htm"><img class="img-responsive" src="logo.png" title="Dungeon Crawl Stone Soup" width="624px" height="120px"></a>
                 </center>
             </div>
 
             <!-- mention free/open-source? -->
-            <p class="lead text-center">A single-player adventure through dungeons filled with dangerous and unfriendly monsters in a quest to find the mystifyingly fabulous Orb of Zot. <a href="about.htm">Read more...</a></p>
+            <p class="lead text-center">A roguelike adventure through dungeons filled with dangerous monsters in a quest to find the mystifyingly fabulous Orb of Zot. <a href="about.htm">Read more...</a></p>
             <center> <!-- XXX: HACKY!!!!! -->
                 <a href="play.htm" class="btn btn-lg btn-success" role="button">Play Online Now!</a>
                 <br><br>
-                <p class="text-center">Or download for: <a href="download.htm#windows">Windows</a>, <a href="download.htm#osx">OS X</a>, <a href="download.htm#android">Android</a> and <a href="download.htm#linux">Linux</a>.</p>
+                <p class="text-center">Or download for: <a href="download.htm#windows">Windows</a>, <a href="download.htm#osx">OS X</a>, <a href="download.htm#android">Android</a>, <a href="download.htm#linux">Linux</a>.</p>
                 <br>
             </center>
 
