@@ -104,7 +104,7 @@
                                 $("<a/>").attr('href', c["watchurl"]).text(c["name"] + " the " + c["latest_milestone"]["title"])
                             )
                         );
-                        e.append($("<p/>").text(getFlavourLine(c)));
+                        e.append($("<p/>").append($("<em/>").text(getFlavourLine(c))));
 
                         $( "#tiles" ).append(e);
 
