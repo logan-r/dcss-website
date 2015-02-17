@@ -17,8 +17,9 @@
 
         <script>
             function fillPlayerTable(games) {
+                $( "#livegames tbody" ).empty();
                 _.each(games, function(e) {
-                    tr = $( "<tr>" );
+                    tr = $( "<tr/>" );
                     tr.append($("<td/>").text(e['name']));
                     tr.append($("<td/>").text(e['version']));
                     tr.append($("<td/>").text(e['XL']));
@@ -31,8 +32,16 @@
                     $( "#livegames tbody" ).append(tr);
                 });
                 $.bootstrapSortable();
+
             }
-            $( $.get("dgl-status.json", fillPlayerTable ));
+            function networkError(error) {
+                $( "#livegames tbody" ).empty();
+                tr = $( "<tr/>" );
+                tr.append($("<td/>").text("Network error, try again :("));
+                $( "#livegames tbody" ).append(tr);
+            }
+            var data = $.get('dgl-status.json');
+            data.done(fillPlayerTable).fail(networkError);
         </script>
     </head>
     <body>
@@ -58,7 +67,11 @@
                         <th>Watch link</th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    <tr>
+                        <th>Loading...</th>
+                    </tr>
+                </tbody>
             </table>
 
             <hr>
