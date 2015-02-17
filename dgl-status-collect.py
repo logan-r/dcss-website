@@ -37,6 +37,7 @@ def parse_location(location):
 
     The human readable string is quite complex. There are six forms:
     * On level 1 of the Dungeon/Abyss/...
+    * On level 1 of Tartarus/Cocytus/Gehenna
     * On level 1 of a Ziggurat
     * In a Labyrinth/Wizard Lab/...
     * In an Ice Cave/Ossuary
@@ -57,6 +58,8 @@ def parse_location(location):
         else:
             # zot defense or sprint
             humanreadable = "in the {}".format(branch)
+    elif br in ('Tar', 'Geh', 'Coc'):
+        humanreadable = "on level {} of {}".format(branchlevel, branch)
     elif br in ('Zig',):
         humanreadable = "on level {} of a {}".format(branchlevel, branch)
     elif br in ('Lab', 'Bazaar', 'WizLab', 'Sewer', 'Bailey', 'Volcano', 'Trove'):
