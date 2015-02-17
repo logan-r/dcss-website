@@ -74,6 +74,7 @@
                     }
                     selected_candidates = _.shuffle(selected_candidates);
 
+                    // Create & write our tiles
                     for (var i = 0; i < selected_candidates.length; i++) {
                         c = selected_candidates[i];
                         e = $( "<div>" );
@@ -81,8 +82,14 @@
                         e.css("background-position", "center center");
                         e.css("border-radius", "5px");
                         e.css("color", "white");
-                        e.append("<p class=\"lead\">" + c["name"] + "</p>");
-                        e.append("<p>" + "Level " + c["XL"] + " " + c["species"] + " " + c["background"] + "<br>" + c["location"] + "</p>");
+                        e.append("<p class=\"lead\">" + c["name"] + " the " + c["latest_milestone"]["title"] +"</p>");
+                        info = "<p>" + "Level " + c["XL"] + " " + c["species"] + " " + c["background"];
+                        if (c["latest_milestone"]["god"]) {
+                            info += " of " + c["latest_milestone"]["god"]
+                        }
+                        info += " " + c["location"] + "</p>";
+                        e.append(info);
+                        e.append(getFlavourLine(c));
                         e.append("<p><a href=\"" + c["watchurl"] + "\">Watch Now</a></p>");
 
                         outer = $( "<div>" );
@@ -107,6 +114,57 @@
                     }
 
                     $( "#dcss-online-link" ).text("See all " + candidates.length + " online games...");
+            }
+            function getFlavourLine(game) {
+                // This function is given a dgl-status game and returns an interesting string about it.
+                // We do this by generating every line and returning a random one.
+                // This is sort of inefficient -- is there a smarter way?
+                // Some lines are more interesting than others. We divide the candidate pool into two tiers
+                // and preferentially draw only from the top tier if there are 2+ candidates
+                m = game["latest_milestone"];
+                candidates = [];
+                // This is a good candidate, so put it in both tiers. Strip trailing '.'
+                candidates.push("Just " + m['milestone'].slice(0, -1));
+                if (m['zigdeepest'] > 0) {
+                    candidates.push("Reached level " + m['zigdeepest'] + " of a Ziggurat");
+                }
+                if (m['zigscompleted'] > 0) {
+                    candidates.push("Completed " + m['zigscompleted'] + " Ziggurats");
+                }
+                if ((m['mhp'] * 2) <  m['hp']) {
+                    candidates.push("HP: " + m['hp'] + '/' + m['mhp'] + ' MP: ' + m['mp'] + '/' + m['mmp']);
+                }
+                if (m['status'].split(",").length > 2) {
+                    candidates.push("Status Effects: " + m['status'].split(",").join(", "));
+                }
+                if (m['nrune'] > 1) {
+                    candidates.push("Collected " + m['nrune'] + " runes");
+                }
+                if (m['banisher']) {
+                    candidates.push("Banished to the Abyss by " + m['banisher']);
+                }
+                // These are the boring always-applicable status lines, so only use them if neccessary
+                if (candidates.length <= 2) {
+                    candidates.push("Just " + m['milestone'].slice(0, -1));
+                    //candidates.push("Str: " + m['str'] + " Int: " + m['int'] + " Dex: " + m['dex']);
+                    //candidates.push("Armour: " + m['ac'] + " Evasion: " + m['ev'] + " Shield: " + m['sh']);
+                    //candidates.push("Found " + m['gold'] + " gold");
+                    //candidates.push("Time played: " + m['dur']);
+                    //candidates.push("On turn " + m['turn']);
+                    if (m['goldspent'] > 0) {
+                        //candidates.push("Spent " + m['gold'] + " gold");
+                    }
+                    if (m['potionsused'] > 0 && m['scrollsused'] > 0) {
+                        //candidates.push("Quaffed " + m['potionsused'] + " potions and read " + m['scrollsused'] + " scrolls");
+                    }
+                    if (m['sk']) {
+                        candidates.push("Highest skill: " + m['sk']);
+                    }
+                    if (m['god']) {
+                        //candidates.push("Worshipping " + m['god']);
+                    }
+                }
+                return _.sample(candidates, 1);
             }
             $( $.get("dgl-status.json", setPlayerCaptions ));
         </script>
