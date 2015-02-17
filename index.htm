@@ -79,8 +79,11 @@
                         c = selected_candidates[i];
                         e = $( "<div>" );
                         e.addClass("col-lg-3 col-md-4 col-sm-6 text-center");
+                        if (i >= 2) {
+                            e.addClass("hidden-xs");
+                        }
                         if (i >= 4) {
-                            e.addClass("hidden-xs hidden-sm");
+                            e.addClass("hidden-sm");
                         }
                         if (i >= 9) {
                             e.addClass("hidden-md");
