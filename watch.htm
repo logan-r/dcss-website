@@ -5,9 +5,35 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
+        <!-- Watch page specific -->
+        <link rel="stylesheet" href="css/bootstrap-sortable.css">
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+
+        <!-- Watch page specific -->
+        <script src="js/bootstrap-sortable.js"></script>
+
+        <script>
+            function fillPlayerTable(games) {
+                _.each(games, function(e) {
+                    tr = $( "<tr>" );
+                    tr.append($("<td/>").text(e['name']));
+                    tr.append($("<td/>").text(e['version']));
+                    tr.append($("<td/>").text(e['XL']));
+                    tr.append($("<td/>").text(e['species']));
+                    tr.append($("<td/>").text(e['background']));
+                    tr.append($("<td/>").text(e['branch'] + ":" + e['branchlevel']));
+                    tr.append($("<td/>").text(e['idle'] + " seconds"));
+                    tr.append($("<td/>").text(e['spectators']));
+                    tr.append($("<td/>").append($("<a/>").text("Watch now.").attr('href', e['watchurl'])));
+                    $( "#livegames tbody" ).append(tr);
+                });
+                $.bootstrapSortable();
+            }
+            $( $.get("dgl-status.json", fillPlayerTable ));
+        </script>
     </head>
     <body>
         <div class="container">
@@ -18,6 +44,22 @@
             </div>
 
             <h2>Live Games</h2>
+            <table class="table sortable" id="livegames">
+                <thead>
+                    <tr>
+                        <th>Nick</th>
+                        <th>Version</th>
+                        <th>XL</th>
+                        <th>Species</th>
+                        <th>Background</th>
+                        <th>Place</th>
+                        <th>Idle</th>
+                        <th>Spectators</th>
+                        <th>Watch link</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
 
             <hr>
             <p class="small text-right">You are too berserk!</p>
