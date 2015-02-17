@@ -90,7 +90,8 @@
                         }
                         e.css("border-radius", "5px");
                         // image
-                        e.append("<div style=\"text-align: center; overflow: hidden; height: 200px;\"><a href=\"" + c["watchurl"] + "\"><img src=\"splashimgs/dcss-splash-" + i + ".png\" style=\"position: relative; left: 100%; margin-left: -200%;\"></a></div>");
+                        imgsrc = "splashimgs/dcss-splash-" + i + ".png";
+                        e.append("<div style=\"text-align: center; overflow: hidden; height: 200px;\"><a href=\"" + c["watchurl"] + "\"><img src=\"" + imgsrc + "\" style=\"position: relative; left: 100%; margin-left: -200%;\"></a></div>");
                         // description
                         e.append("<p class=\"lead\"><a href=\"" + c["watchurl"] + "\">" + c["name"] + " the " + c["latest_milestone"]["title"] +"</a></p>");
                         e.append("<p>" + getFlavourLine(c) + "</p>");
