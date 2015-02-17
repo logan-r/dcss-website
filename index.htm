@@ -107,6 +107,19 @@
                         e.append($("<p/>").text(getFlavourLine(c)));
 
                         $( "#tiles" ).append(e);
+
+                        // Add in clearfix classes if required
+                        if (i > 0 && i != selected_candidates.length) {
+                            if ((i+1) % 4 == 0) {
+                                $( "#tiles" ).append($("<div/>").addClass("clearfix visible-lg"));
+                            }
+                            if ((i+1) % 3 == 0) {
+                                $( "#tiles" ).append($("<div/>").addClass("clearfix visible-md"));
+                            }
+                            if ((i+1) % 2 == 0) {
+                                $( "#tiles" ).append($("<div/>").addClass("clearfix visible-sm"));
+                            }
+                        }
                     }
 
                     $( "#dcss-online-link" ).text("See all " + data.length + " online games...");
