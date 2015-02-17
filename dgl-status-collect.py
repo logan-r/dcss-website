@@ -8,12 +8,6 @@ import json
 import sys
 import urllib2
 
-if len(sys.argv) != 3:
-    print 'error: incorrect number of arguments'
-    print 'usage: %s servers.json outfile' % sys.argv[0]
-    print 'eg: %s /var/www/servers.json /var/www/dgl-status.json' % sys.argv[0]
-    sys.exit(1)
-
 SP_TABLE = {'Mf': 'Merfolk', 'Ke': 'Kenku*', 'MD': 'Mountain Dwarf*', 'Og': 'Ogre', 'Na': 'Naga', 'DD': 'Deep Dwarf', 'DE': 'Deep Elf', 'Tr': 'Troll', 'Mu': 'Mummy', 'GE': 'Grey Elf*', 'VS': 'Vine Stalker', 'HO': 'Hill Orc', 'Sp': 'Spriggan', 'Te': 'Tengu', 'HD': 'Hill Dwarf*', 'HE': 'High Elf', 'El': 'Elf*', 'OM': 'Ogre-Mage*', 'Dj': 'Djinni*', 'Gr': 'Gargoyle', 'Ko': 'Kobold', 'Dg': 'Demigod', 'Gh': 'Ghoul', 'Fo': 'Formicid', 'Ce': 'Centaur', 'Hu': 'Human', 'Vp': 'Vampire', 'Op': 'Octopode', 'Mi': 'Minotaur', 'Pl': 'Plutonian*', 'LO': 'Lava Orc*', 'Gn': 'Gnome*', 'Ha': 'Halfling', 'Dr': 'Draconian', 'Ds': 'Demonspawn', 'SE': 'Sludge Elf*', 'Fe': 'Felid'}
 BG_TABLE = {'Pr': 'Priest*', 'CK': 'Chaos Knight', 'AE': 'Air Elementalist', 'DK': 'Death Knight', 'Cj': 'Conjurer', 'EE': 'Earth Elementalist', 'Mo': 'Monk', 'AM': 'Arcane Marksman', 'Ne': 'Necromancer', 'Su': 'Summoner', 'VM': 'Venom Mage', 'Sk': 'Skald', 'Re': 'Reaver*', 'Pa': 'Paladin*', 'FE': 'Fire Elementalist', 'Th': 'Thief*', 'Cr': 'Crusader*', 'St': 'Stalker*', 'IE': 'Ice Elementalist', 'Be': 'Berserker', 'En': 'Enchanter', 'Wn': 'Wanderer', 'Jr': 'Jester*', 'Hu': 'Hunter', 'AK': 'Abyssal Knight', 'As': 'Assassin', 'Ar': 'Artificer', 'Wr': 'Warper', 'Fi': 'Fighter', 'Gl': 'Gladiator', 'Tm': 'Transmuter', 'Wz': 'Wizard', 'He': 'Healer'}
 BR_TABLE = {'D': 'Dungeon', 'Orc': 'Orcish Mines', 'Elf': 'Elven Halls', 'Lair': 'Lair of the Beasts', 'Depths': 'Depths', 'Swamp': 'Swamp', 'Shoals': 'Shoals', 'Spider': 'Spider Nest', 'Snake': 'Snake Pit', 'Slime': 'Slime Pits', 'Vaults': 'Vaults', 'Crypt': 'Crypt', 'Tomb': 'Tomb of the Ancients', 'Dis': 'Iron City of Dis', 'Geh': 'Gehenna', 'Coc': 'Cocytus', 'Tar': 'Tartarus', 'Zot':'Realm of Zot', 'Abyss': 'Abyss', 'Zig': 'Ziggurat', 'Lab': 'Labyrinth', 'Bazaar': 'Bazaar', 'WizLab': 'Wizard\'s Laboratory', 'Sewer': 'Sewer', 'Bailey': 'Bailey', 'Ossuary': 'Ossuary', 'IceCv': 'Ice Cave', 'Volcano': 'Volcano', 'Hell': 'Vestibule of Hell', 'Temple': 'Ecumenical Temple', 'Pan': 'Pandemonium', 'Trove': 'Treasure Trove'}
@@ -126,6 +120,12 @@ def dump_games(games, dest):
     json.dump(games, open(dest, 'w'), indent=1)
 
 if __name__ == '__main__':
+    if len(sys.argv) != 3:
+        print 'error: incorrect number of arguments'
+        print 'usage: %s servers.json outfile' % sys.argv[0]
+        print 'eg: %s /var/www/servers.json /var/www/dgl-status.json' % sys.argv[0]
+        sys.exit(1)
+
     OUTFILE = sys.argv[2]
     try:
         SERVERS = json.load(open(sys.argv[1], 'r'))
@@ -133,4 +133,8 @@ if __name__ == '__main__':
         print "Error: couldn't load %s!" % SERVERS
         sys.exit(1)
 
-    dump_games(get_games(SERVERS), OUTFILE)
+    try:
+        dump_games(get_games(SERVERS), OUTFILE)
+    except StandardError as e:
+        print "Error: unhandled exception: %s.\nFull traceback:\n%s" % (e, traceback.format_exc())
+        sys.exit(1)
