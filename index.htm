@@ -10,6 +10,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
 
         <script>
+            // Convert RSS feed into news list
             // http://www.davidjuth.com/rest-demo-jquery-rss.aspx
             $( function()
             {
@@ -140,7 +141,8 @@
                 }
                 return _.sample(candidates, 1);
             }
-            $( $.get("dgl-status.json", setPlayerCaptions ));
+            data = $.get("dgl-status.json");
+            data.done(setPlayerCaptions);
         </script>
     </head>
     <body>
