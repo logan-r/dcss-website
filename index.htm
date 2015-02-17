@@ -99,15 +99,7 @@
                         $( "#tiles" ).append(e);
                     }
 
-                    // Shuffle the tiles. This randomises the image ordering
-                    // http://jsfiddle.net/C6LPY/2/
-                    var parent = $("#tiles");
-                    var divs = parent.children();
-                    while (divs.length) {
-                        parent.append(divs.splice(Math.floor(Math.random() * divs.length), 1)[0]);
-                    }
-
-                    $( "#dcss-online-link" ).text("See all " + candidates.length + " online games...");
+                    $( "#dcss-online-link" ).text("See all " + data.length + " online games...");
             }
             function getFlavourLine(game) {
                 // This function is given a dgl-status game and returns an interesting string about it.
