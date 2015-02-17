@@ -91,11 +91,20 @@
                         }
                         e.css("border-radius", "5px");
                         // image
-                        imgsrc = "splashimgs/dcss-splash-" + i + ".png";
-                        e.append("<div style=\"text-align: center; overflow: hidden; height: 200px;\"><a href=\"" + c["watchurl"] + "\"><img src=\"" + imgsrc + "\" style=\"position: relative; left: 100%; margin-left: -200%;\"></a></div>");
+                        e.append(
+                            $("<div/>").css('text-align', 'center').css('overflow', 'hidden').css('height', '200px').append(
+                                $("<a/>").attr('href', c["watchurl"]).append(
+                                    $("<img/>").attr('src', "splashimgs/dcss-splash-" + i + ".png").css('position', 'relative').css('left', '100%').css('margin-left', '-200%')
+                                    )
+                            )
+                        );
                         // description
-                        e.append("<p class=\"lead\"><a href=\"" + c["watchurl"] + "\">" + c["name"] + " the " + c["latest_milestone"]["title"] +"</a></p>");
-                        e.append("<p>" + getFlavourLine(c) + "</p>");
+                        e.append(
+                            $("<p/>").addClass("lead").append(
+                                $("<a/>").attr('href', c["watchurl"]).text(c["name"] + " the " + c["latest_milestone"]["title"])
+                            )
+                        );
+                        e.append($("<p/>").text(getFlavourLine(c)));
 
                         $( "#tiles" ).append(e);
                     }
