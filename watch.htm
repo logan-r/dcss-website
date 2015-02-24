@@ -25,8 +25,12 @@
                     tr.append($("<td/>").text(e['XL']));
                     tr.append($("<td/>").text(e['species']));
                     tr.append($("<td/>").text(e['background']));
-                    if (e['branch'] && e['branchlevel']) {
-                        tr.append($("<td/>").text(e['branch'] + ":" + e['branchlevel']));
+                    if (e['branch']) {
+                        if (e['branchlevel'] != 0) {
+                            tr.append($("<td/>").text(e['branch'] + ":" + e['branchlevel']));
+                        } else {
+                            tr.append($("<td/>").text(e['branch']));
+                        }
                     } else {
                         tr.append($("<td/>"));
                     }
