@@ -25,9 +25,19 @@
                     tr.append($("<td/>").text(e['XL']));
                     tr.append($("<td/>").text(e['species']));
                     tr.append($("<td/>").text(e['background']));
-                    tr.append($("<td/>").text(e['branch'] + ":" + e['branchlevel']));
-                    tr.append($("<td/>").text(e['idle'] + " seconds"));
-                    tr.append($("<td/>").text(e['spectators']));
+                    if (e['branch'] && e['branchlevel']) {
+                        tr.append($("<td/>").text(e['branch'] + ":" + e['branchlevel']));
+                    } else {
+                        tr.append($("<td/>"));
+                    }
+                    if (e['idle'] >= 300) {
+                         tr.append($("<td/>").text("Over 5 minutes").attr('data-value', e['idle']));
+                    } else if (e['idle'] >= 60) {
+                         tr.append($("<td/>").text(Math.round(e['idle'] / 60 + " minutes").attr('data-value', e['idle'])));
+                    } else {
+                         tr.append($("<td/>").text(e['idle'] + " seconds").attr('data-value', e['idle']));
+                    }
+                    tr.append($("<td/>").text(e['viewers']));
                     tr.append($("<td/>").append($("<a/>").text("Watch now.").attr('href', e['watchurl'])));
                     $( "#livegames tbody" ).append(tr);
                 });
