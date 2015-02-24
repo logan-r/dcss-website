@@ -33,7 +33,7 @@
                     if (e['idle'] >= 300) {
                          tr.append($("<td/>").text("Over 5 minutes").attr('data-value', e['idle']));
                     } else if (e['idle'] >= 60) {
-                         tr.append($("<td/>").text(Math.round(e['idle'] / 60 + " minutes").attr('data-value', e['idle'])));
+                         tr.append($("<td/>").text(Math.round(e['idle'] / 60) + " minutes").attr('data-value', e['idle']));
                     } else {
                          tr.append($("<td/>").text(e['idle'] + " seconds").attr('data-value', e['idle']));
                     }
