@@ -26,12 +26,14 @@ def get_milestone(nick):
         return None
     data = response.read()
     try:
-        milestone = json.loads(data)["records"][0]
+        json_response = json.loads(data)
     except StandardError:
-        print "Warning: couldn't parse milestone for %s, skipping." % nick
-        print "Bad milestone was: %s" % data
-        milestone = None
-    return milestone
+        print "Warning: couldn't parse milestone for %s, skipping. (%s)" % (nick, data)
+        return None
+    if "records" not in json_response:
+        # no milestones for character -- sequell's fetcher hasn't catch up with a new account yet
+        return None
+    return json_response["records"][0]
 
 def parse_location(location):
     """Parse raw location string and return (branch, branchlevel, humanreadable).
