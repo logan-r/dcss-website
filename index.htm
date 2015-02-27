@@ -130,16 +130,6 @@
                 // This is sort of inefficient -- is there a smarter way?
                 m = game["latest_milestone"];
                 candidates = [];
-                // These two lines are interesting, so increase their chance
-                i = "Just " + m['milestone'].slice(0, -1);
-                candidates.push(i);
-                candidates.push(i);
-                i = "Level " + game["XL"] + " " + game["species"] + " " + game["background"] + (m["god"] ? " of " + m["god"] : "");
-                candidates.push(i);
-                candidates.push(i);
-                // location field needs the first letter capitalised
-                candidates.push(game["location"].charAt(0).toUpperCase() + game["location"].slice(1));
-                // All other lines will be added to the pool if they're applicable
                 if (m['zigdeepest'] > 0) {
                     candidates.push("Reached level " + m['zigdeepest'] + " of a Ziggurat");
                 }
@@ -150,7 +140,8 @@
                     candidates.push("HP: " + m['hp'] + '/' + m['mhp'] + ' MP: ' + m['mp'] + '/' + m['mmp']);
                 }
                 if (m['status'].split(",").length > 2) {
-                    candidates.push("Status Effects: " + m['status'].split(",").join(", "));
+                    status = m['status'].split(",").join(", ")
+                    candidates.push(status.charAt(0).toUpperCase() + status.slice(1));
                 }
                 if (m['nrune'] > 1) {
                     candidates.push("Collected " + m['nrune'] + " runes");
@@ -158,8 +149,14 @@
                 if (m['banisher']) {
                     candidates.push("Banished to the Abyss by " + m['banisher']);
                 }
-                if (m['sk']) {
-                    candidates.push("Highest skill: " + m['sk']);
+                if (candidates.length < 1 || Math.random() < 0.33) {
+                    candidates.push("Just " + m['milestone'].slice(0, -1));
+                    candidates.push("Level " + game["XL"] + " " + game["species"] + " " + game["background"] + (m["god"] ? " of " + m["god"] : ""));
+                    // location field needs the first letter capitalised
+                    candidates.push(game["location"].charAt(0).toUpperCase() + game["location"].slice(1));
+                    if (m['sk']) {
+                        candidates.push("Highest skill: " + m['sk']);
+                    }
                 }
                 return _.sample(candidates, 1);
             }
