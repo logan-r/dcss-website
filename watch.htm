@@ -17,7 +17,7 @@
         <script>
             function fillPlayerTable(games) {
                 $( "#livegames tbody" ).empty();
-                for (var i = 0; i < games.length; i++)
+                for (var i = 0; i < games.length; i++) {
                     e = games[i];
                     tr = $( "<tr/>" );
                     tr.append($("<td/>").text(e['name']));
