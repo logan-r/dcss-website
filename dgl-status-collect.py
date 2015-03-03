@@ -30,7 +30,7 @@ def get_milestone(nick):
     except StandardError:
         print "Warning: couldn't parse milestone for %s, skipping. (%s)" % (nick, data)
         return None
-    if "records" not in json_response:
+    if "records" not in json_response or not json_response["records"]:
         # no milestones for character -- sequell's fetcher hasn't catch up with a new account yet
         return None
     return json_response["records"][0]
