@@ -10,7 +10,6 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
 
         <!-- Watch page specific -->
         <script src="js/bootstrap-sortable.js"></script>
@@ -18,7 +17,8 @@
         <script>
             function fillPlayerTable(games) {
                 $( "#livegames tbody" ).empty();
-                _.each(games, function(e) {
+                for (var i = 0; i < games.length; i++)
+                    e = games[i];
                     tr = $( "<tr/>" );
                     tr.append($("<td/>").text(e['name']));
                     tr.append($("<td/>").text(e['version']));
@@ -44,7 +44,7 @@
                     tr.append($("<td/>").text(e['viewers']));
                     tr.append($("<td/>").append($("<a/>").text("Watch now.").attr('href', e['watchurl'])));
                     $( "#livegames tbody" ).append(tr);
-                });
+                }
                 $.bootstrapSortable();
 
             }
