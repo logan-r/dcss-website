@@ -16,7 +16,7 @@
             {
                 $("#feedContainer").empty();
 
-                $.get("feed.rss", function(data) {                           
+                $.get("/wordpress/feed", function(data) {
                     
                     $('#newsContainer').append("<ul>");
                     $(data).find('item').slice(0, 4).each(function() {  
