@@ -4,7 +4,9 @@
 
 Intended to be run every few minutes from cron."""
 
+import time
 import json
+import os
 import sys
 import urllib2
 import traceback
@@ -147,23 +149,52 @@ def dump_games(games, dest):
     # compact dump format
     json.dump(games, open(dest, 'w'), indent=1)
 
-if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        print 'error: incorrect number of arguments'
-        print 'usage: %s servers.json outfile' % sys.argv[0]
-        print 'eg: %s /var/www/servers.json /var/www/dgl-status.json' % sys.argv[0]
-        sys.exit(1)
-
-    OUTFILE = sys.argv[2]
+def load_servers(servers_json):
     try:
-        SERVERS = json.load(open(sys.argv[1], 'r'))
+        SERVERS = json.load(open(SERVERS_JSON, 'r'))
     except StandardError:
         print "Error: couldn't load %s!" % SERVERS
         print traceback.format_exc()
         sys.exit(1)
+    return SERVERS
 
+def main(servers, outfile):
     try:
-        dump_games(get_games(SERVERS), OUTFILE)
+        dump_games(get_games(servers), outfile)
     except StandardError as e:
         print "Error: unhandled exception::\n%s" % traceback.format_exc()
         sys.exit(1)
+
+def acquire_lock(lockfile):
+    if os.path.exists(lockfile):
+        print "Error: lockfile already exists."
+        sys.exit(1)
+    with open(lockfile, 'w') as f:
+        f.write(str(os.getpid()))
+    time.sleep(1) # realllly crappy lock race protection
+    with open(lockfile, 'r') as f:
+        if f.read() != str(os.getpid()):
+            print "Error: something overwrote our new lockfile?!"
+            sys.exit(1)
+
+def release_lock(lockfile):
+    os.unlink(lockfile)
+
+if __name__ == '__main__':
+    if len(sys.argv) != 4:
+        print 'error: incorrect number of arguments'
+        print 'usage: %s servers.json outfile lockfile' % sys.argv[0]
+        print 'eg: %s /var/www/servers.json /var/www/dgl-status.json /tmp/dgl-status-collect.lock' % sys.argv[0]
+        sys.exit(1)
+
+    SERVERS_JSON = sys.argv[1]
+    OUTFILE = sys.argv[2]
+    LOCKFILE = sys.argv[3]
+
+    SERVERS = load_servers(SERVERS_JSON)
+
+    acquire_lock(LOCKFILE)
+    try:
+        main(SERVERS, OUTFILE)
+    finally:
+        release_lock(LOCKFILE)
