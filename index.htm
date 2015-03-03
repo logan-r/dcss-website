@@ -36,6 +36,13 @@
         <script>
             function setPlayerCaptions(data) {
                     n = 6; // is there a nicer way to hardcode this?
+                    numimgs = 11; // the number of images in splashimgs/ -- remember the images are 0-indexed!
+                    // Generate the image candidates
+                    image_candidates = [];
+                    for (var i=0; i < numimgs; i++) {
+                        image_candidates.push('splashimgs/dcss-splash-' + i + '.png');
+                    }
+                    // Generate the spectator candidates
                     // Preconditions:
                     // We only want candidates with full info (some entries lack xl/race/background/location, so test for xl)
                     // Check they have a species -- player might be on start screen
@@ -74,6 +81,7 @@
                         console.log("Warning: only found " + selected_candidates.length + " candidates.");
                     }
                     selected_candidates = _.shuffle(selected_candidates);
+                    selected_image_candidates = _.shuffle(_.sample(image_candidates, selected_candidates.length));
 
                     // Create & write our tiles
                     for (var i = 0; i < selected_candidates.length; i++) {
@@ -92,7 +100,7 @@
                         e.append(
                             $("<div/>").css('text-align', 'center').css('overflow', 'hidden').css('height', '150px').append(
                                 $("<a/>").attr('href', c["watchurl"]).append(
-                                    $("<img/>").attr('src', "splashimgs/dcss-splash-" + i + ".png").css('position', 'relative').css('left', '100%').css('margin-left', '-200%')
+                                    $("<img/>").attr('src', selected_image_candidates.pop()).css('position', 'relative').css('left', '100%').css('margin-left', '-200%')
                                     )
                             )
                         );
