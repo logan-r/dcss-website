@@ -22,3 +22,9 @@ Simple static web content:
 ## Dynamic Content
 
 * dgl-status-collect.py -- should be run from cron every few minutes to generate dgl-status, which is a user-accessible file
+
+## Minification, compression & etc
+
+All locally hosted css & js should be minified.
+
+All locally hosted PNGs should be losslessly compressed with pngcrush/pngout and then likely lossy compressed with pngquant: `pngquant 64 img.png` will create a 64-colour dithered version of the image. This will generally reduce dcss screenshot size to a quarter of the original with minimal perceptual changes.
