@@ -20,7 +20,7 @@ def get_milestone(nick):
     url = MILESTONE_URL.format(nick=nick)
     try:
         response = urllib2.urlopen(url, timeout=5)
-    except urllib2.URLError:
+    except (urllib2.URLError, httplib.BadStatusLine):
         print "Warning: couldn't grab %s" % url
         return None
     if response.getcode() != 200:
