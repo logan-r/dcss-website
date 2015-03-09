@@ -172,7 +172,7 @@ def main(servers, outfile):
 
 def acquire_lock(lockfile):
     if os.path.exists(lockfile):
-        print "Error: lockfile already exists."
+        # lockfile already exists, so fail silently
         sys.exit(1)
     with open(lockfile, 'w') as f:
         f.write(str(os.getpid()))
