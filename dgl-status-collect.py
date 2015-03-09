@@ -183,7 +183,11 @@ def acquire_lock(lockfile):
             sys.exit(1)
 
 def release_lock(lockfile):
-    os.unlink(lockfile)
+    try:
+        os.unlink(lockfile)
+    except OSError as e:
+        print "Error: couldn't release lock (%s)" % e
+        sys.exit(1)
 
 if __name__ == '__main__':
     if len(sys.argv) != 4:
