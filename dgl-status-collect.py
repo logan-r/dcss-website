@@ -24,20 +24,24 @@ def get_milestone(nick):
     try:
         response = urllib2.urlopen(url, timeout=5)
     except (urllib2.URLError, httplib.BadStatusLine, socket.timeout) as e:
-        print "Warning: couldn't grab %s (%s)" % (url, e)
+        if not QUIET:
+            print "Warning: couldn't grab milestone %s (%s)" % (url, e)
         return None
     if response.getcode() != 200:
-        print "Warning: %s returned status code %s, skipping." % (url, response.getcode())
+        if not QUIET:
+            print "Warning: %s returned status code %s, skipping." % (url, response.getcode())
         return None
     try:
         data = response.read()
     except ssl.SSLError as e:
-        print "Warning: couldn't grab %s (%s)" % (url, e)
+        if not QUIET:
+            print "Warning: couldn't read milestone %s (%s)" % (url, e)
         return None
     try:
         json_response = json.loads(data)
     except StandardError:
-        print "Warning: couldn't parse milestone for %s, skipping. (%s)" % (nick, data)
+        if not QUIET:
+            print "Warning: couldn't parse milestone for %s, skipping. (%s)" % (nick, data)
         return None
     if "records" not in json_response or not json_response["records"]:
         # no milestones for character -- sequell's fetcher hasn't catch up with a new account yet
@@ -130,19 +134,23 @@ def get_games(servers):
         try:
             response = urllib2.urlopen(url, timeout=5)
         except (urllib2.URLError, socket.timeout) as e:
-            print "Warning: couldn't grab %s (%s)" % (url, e)
+            if not QUIET:
+                print "Warning: couldn't grab dgl-status %s (%s)" % (url, e)
             continue
         if response.getcode() != 200:
-            print "Warning: %s returned status code %s, skipping." % (url, response.getcode())
+            if not QUIET:
+                print "Warning: dgl-status %s returned status code %s, skipping." % (url, response.getcode())
             continue
         for line in response.read().splitlines():
             try:
                 game = parse_line(line)
             except StandardError as e:
-                print "Warning: couldn't parse line '%s' from %s." % (line, server['name'])
+                if not QUIET:
+                    print "Warning: couldn't parse line '%s' from %s." % (line, server['name'])
                 continue
             if not game:
-                print "Warning: ignoring line '%s' from %s (doesn't have 4-6 # characters)" % (line, url)
+                if not QUIET:
+                    print "Warning: ignoring line '%s' from %s (doesn't have 4-6 # characters)" % (line, url)
                 continue
             game['source'] = server['shortname']
             if 'watchurl' in server:
@@ -194,10 +202,16 @@ def release_lock(lockfile):
 if __name__ == '__main__':
     if len(sys.argv) != 4:
         print 'error: incorrect number of arguments'
-        print 'usage: %s servers.json outfile lockfile' % sys.argv[0]
+        print 'usage: %s [-q] servers.json outfile lockfile' % sys.argv[0]
         print 'eg: %s /var/www/servers.json /var/www/dgl-status.json /tmp/dgl-status-collect.lock' % sys.argv[0]
         sys.exit(1)
 
+    # Quiet silences warnings, but not errors
+    if sys.argv[1] == '-q':
+        QUIET = True
+        del(sys.argv[1])
+    else:
+        QUIET = False
     SERVERS_JSON = sys.argv[1]
     OUTFILE = sys.argv[2]
     LOCKFILE = sys.argv[3]
