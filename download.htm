@@ -16,51 +16,93 @@
                 </center>
             </div>
 
-            <h2 class="text-center">Download</h2>
+            <div class="row">
+                <div class="col-md-offset-2 col-md-8 col-sm-12">
 
-            <a name="windows"></a>
-            <h3>Windows</h3>
-            <ul>
-                <li><a href="http://sourceforge.net/projects/crawl-ref/files/Stone%20Soup/0.15.2/stone_soup-0.15.2-tiles-win32.zip/download">Download Tiles Version</a></li>
-                <li><a href="http://sourceforge.net/projects/crawl-ref/files/Stone%20Soup/0.15.2/stone_soup-0.15.2-win32.zip/download">Download Console Version</a></li>
-            </ul>
+                    <h2 class="text-center">Download</h2>
 
-            <a name="osx"></a>
-            <h3>OS X</h3>
-            <ul>
-                <li><a href="http://crawl.develz.org/release/stone_soup-0.15.0-tiles-macosx.zip">Download Tiles Version</a></li>
-                <li><a href="http://crawl.develz.org/release/stone_soup-0.15.0-console-macosx.zip">Download Console Version</a></li>
-            </ul>
+                    <table class="table" style="text-align: center;">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>
+                                    <h3 class="text-center">Graphical Tiles</h3>
+                                    <img src="img/tiles.png" class="center-block">
+                                </th>
+                                <th>
+                                    <h3 class="text-center">Console</h3>
+                                    <img src="img/console.png" class="center-block">
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Windows</th>
+                                <td>
+                                    <ul class="list-unstyled">
+                                        <li>32-bit: <a href="/release/stone_soup-0.16.0-win32.zip">Download</a></li>
+                                        <li>64-bit: <a href="/release/stone_soup-0.16.0-win64.zip">Download</a></li>
+                                    </ul>
+                                <td>
+                                    <ul class="list-unstyled">
+                                        <li>32-bit: <a href="/release/stone_soup-0.16.0-tiles-win32.zip">Download</a></li>
+                                        <li>64-bit: <a href="/release/stone_soup-0.16.0-tiles-win64.zip">Download</a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Mac OS X</th>
+                                <td><a href="/release/stone_soup-0.16.0-tiles-macos.zip">Download</a></td>
+                                <td><a href="/release/stone_soup-0.16.0-console-macos.zip">Download</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Android</th>
+                                <td><a href="/release/crawl_tiles_android-0.16.0.apk">Download</a></td>
+                                <td><a href="https://www.dropbox.com/s/67ue5g99m6yzluo/CrawlApp.apk?dl=0">Download</a> (unofficial, 0.15.2)</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Linux</th>
+                                <td colspan="2"><a href="#linux">See Instructions</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Source</th>
+                                <td colspan="2"><a href="#source">See Instructions</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-            <a name="android"></a>
-            <h3>Android</h3>
-            <ul>
-                <li><a href="http://sourceforge.net/projects/crawl-ref/files/Stone%20Soup/0.15.2/crawl_tiles_android-0.15.2.apk/download">Download Tiles Version</a></li>
-                <li>Download Console Version <em>(currently unavailable!)</em></li>
-            </ul>
 
-            <a name="linux"></a>
-            <h3>Linux</h3>
-            <p>A version of DCSS may be available in your distribution's package repository (look for a package 'crawl' or similar), but beware! The version could be pretty old. Remember, you can always <a href="#source">build from source</a>.</p>
-            <h4>Ubuntu, Debian &amp; other Debian-derivatives</h4>
-            <p>DCSS packages are available for i386, amd64 and armel architectures. Follow these instructions:</p>
-            <pre>echo 'deb http://crawl.develz.org/debian crawl 0.15' | sudo tee /etc/apt/sources.list # Install the source repository
-wget http://crawl.develz.org/debian/pubkey -O - | sudo apt-key add - # Install the DCSS signing key
-sudo apt-get update # update your package list
-sudo apt-get install crawl # install console version
-sudo apt-get install crawl-tiles # install tiles version</pre>
-            </ul>
-            <h4>Unofficial packages for Fedora 21/20</h4>
-            <p>Player BlasterBlade has provided Fedora packages for Crawl (tiles and console builds) in the openSUSE Build System repository. To install the tiles version, run the following (for Fedora 20, replace the 21 in the URL):</p>
-            <pre>cd /etc/yum.repos.d/
-sudo wget http://download.opensuse.org/repositories/home:nazar554/Fedora_21/home:nazar554.repo # Install the source repository
-sudo yum install crawl-sdl crawl-data # install tiles version
-sudo yum install crawl-console crawl-data # install console version</pre>
+                    <a name="linux"></a>
+                    <h3>Linux</h3>
+                    <p>A version of DCSS may be available in your distribution's package repository (look for a package 'crawl' or similar), but beware! The version could be pretty old. Remember, you can always <a href="#source">build from source</a>.</p>
+                    <h4>Ubuntu, Debian &amp; other Debian derivatives</h4>
+                    <p>DCSS packages are available for i386, amd64 and armel architectures. Follow these instructions:</p>
+                    <pre>echo 'deb http://crawl.develz.org/debian crawl 0.15' | sudo tee /etc/apt/sources.list # Install the source repository
+# Install the DCSS signing key
+wget http://crawl.develz.org/debian/pubkey -O - | sudo apt-key add -
+# update your package list
+sudo apt-get update
+# install console version
+sudo apt-get install crawl
+# install tiles version
+sudo apt-get install crawl-tiles</pre>
+                    </ul>
+                    <h4>Fedora 21 & OpenSUSE</h4>
+                    <p>BlasterBlade provides Fedora packages for Crawl (tiles and console builds) in the openSUSE Build System repository. To install the tiles version, run the following (for Fedora 20, replace the 21 in the URL):</p>
+                    <pre>cd /etc/yum.repos.d/
+# Install the source repository
+sudo wget http://download.opensuse.org/repositories/home:nazar554/Fedora_21/home:nazar554.repo
+# install tiles version
+sudo yum install crawl-sdl crawl-data
+# install console version
+sudo yum install crawl-console crawl-data</pre>
 
-            <a name="source"></a>
-            <h3>Source Code</h3>
-            <p>If you'd like to compile DCSS yourself (or make changes...), you can download the git repository here: <a href="https://gitorious.org/crawl/crawl/source/HEAD">https://gitorious.org/crawl/crawl/source/HEAD</a>. For help using git, check out the <a href="https://gitorious.org/crawl/crawl/source/HEAD:crawl-ref/docs/develop/git/quickstart.txt">quickstart guide</a>. For help compiling DCSS, check <a href="https://gitorious.org/crawl/crawl/source/HEAD:crawl-ref/INSTALL.txt">INSTALL.txt</a>.</p>
-
+                    <a name="source"></a>
+                    <h3>Source Code</h3>
+                    <p>If you'd like to compile DCSS yourself (or make changes...), you can download the git repository here: <a href="https://gitorious.org/crawl/crawl/source/HEAD">https://gitorious.org/crawl/crawl/source/HEAD</a>. For help using git, check out the <a href="https://gitorious.org/crawl/crawl/source/HEAD:crawl-ref/docs/develop/git/quickstart.txt">quickstart guide</a>. For help compiling DCSS, check <a href="https://gitorious.org/crawl/crawl/source/HEAD:crawl-ref/INSTALL.txt">INSTALL.txt</a>.</p>
+        
+                </div>
+            </div>
             <hr>
             <p class="small text-right">You are too berserk!</p>
         </div>
