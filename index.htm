@@ -104,6 +104,7 @@
                     selected_image_candidates = shuffleArray(getRandomSubarray(image_candidates, selected_candidates.length));
 
                     // Create & write our tiles
+                    $( "#tiles" ).empty();
                     for (var i = 0; i < selected_candidates.length; i++) {
                         c = selected_candidates[i];
                         e = $( "<div>" );
@@ -205,7 +206,7 @@
             </center>
 
             <h2 class="text-center">Live games</h2>
-            <div class="row" id="tiles"></div>
+            <div class="row" id="tiles"><p class="text-center">Loading...</p></div>
             <a href="watch.htm"><p id="dcss-online-link">See all games...</p></a>
 
             <h2>Latest News</h2>
