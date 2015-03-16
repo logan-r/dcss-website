@@ -100,7 +100,7 @@ def parse_line(line):
     if 'trunk' in split[1] or 'git' in split[1]:
         game['version'] = 'Trunk'
     elif '-' in split[1]:
-        game['version'] = split[1].split('-', 1)[1]
+        game['version'] = split[1].split('-')[-1]
     if 'zd' in split[1]:
         game['type'] = 'Zot Defence'
     elif 'sprint' in split[1]:
