@@ -28,11 +28,11 @@
                                 <th></th>
                                 <th>
                                     <h3 class="text-center">Graphical Tiles</h3>
-                                    <img src="img/tiles.png" class="center-block">
+                                    <img src="tileimgs/tiles.png" class="center-block">
                                 </th>
                                 <th>
                                     <h3 class="text-center">Console</h3>
-                                    <img src="img/console.png" class="center-block">
+                                    <img src="tileimgs/console.png" class="center-block">
                                 </th>
                             </tr>
                         </thead>
@@ -78,7 +78,8 @@
                     <p>A version of DCSS may be available in your distribution's package repository (look for a package 'crawl' or similar), but beware! The version could be pretty old. Remember, you can always <a href="#source">build from source</a>.</p>
                     <h4>Ubuntu, Debian &amp; other Debian derivatives</h4>
                     <p>DCSS packages are available for i386, amd64 and armel architectures. Follow these instructions:</p>
-                    <pre>echo 'deb http://crawl.develz.org/debian crawl 0.15' | sudo tee /etc/apt/sources.list # Install the source repository
+                    <pre>echo '# Install the source repository
+deb http://crawl.develz.org/debian crawl 0.15' | sudo tee /etc/apt/sources.list
 # Install the DCSS signing key
 wget http://crawl.develz.org/debian/pubkey -O - | sudo apt-key add -
 # update your package list
