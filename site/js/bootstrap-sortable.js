@@ -1,1 +1,196 @@
-!function(t,e){"use strict";function r(){return e}"function"==typeof define&&define.amd?define("tinysort",r):t.tinysort=e}(this,function(){"use strict";function t(t){function n(){0===arguments.length?c({}):a(arguments,function(t){c(r(t)?{selector:t}:t)}),v=M.length}function c(t){var e=!!t.selector,r=e&&":"===t.selector[0],a=o(t||{},w);M.push(o({bFind:e,bAttr:!(a.attr===l||""===a.attr),bData:a.data!==l,bFilter:r,mFilter:l,fnSort:a.sortFunction,iAsc:"asc"===a.order?1:-1},a))}function u(){a(t,function(t,e){F?F!==t.parentNode&&(k=!1):F=t.parentNode;var r=M[0],a=r.bFilter,o=r.selector,n=!o||a&&t.matchesSelector(o)||o&&t.querySelector(o),s=n?z:E,i={elm:t,pos:e,posn:s.length};A.push(i),s.push(i)}),C=z.slice(0)}function g(){z.sort(y)}function y(t,o){var n=0;for(0!==b&&(b=0);0===n&&v>b;){var l=M[b],c=l.ignoreDashes?h:p;if(a(m,function(t){var e=t.prepare;e&&e(l)}),l.sortFunction)n=l.sortFunction(t,o);else if("rand"==l.order)n=Math.random()<.5?1:-1;else{var d=i,u=e(t,l),g=e(o,l);if(!l.forceStrings){var w=r(u)?u&&u.match(c):i,y=r(g)?g&&g.match(c):i;if(w&&y){var S=u.substr(0,u.length-w[0].length),C=g.substr(0,g.length-y[0].length);S==C&&(d=!i,u=f(w[0]),g=f(y[0]))}}n=u===s||g===s?0:l.iAsc*(g>u?-1:u>g?1:0)}a(m,function(t){var e=t.sort;e&&(n=e(l,d,u,g,n))}),0===n&&b++}return 0===n&&(n=t.pos>o.pos?1:-1),n}function S(){var t=z.length===A.length;k&&t?(z.forEach(function(t){x.appendChild(t.elm)}),F.appendChild(x)):(z.forEach(function(t){var e=t.elm,r=d.createElement("div");t.ghost=r,e.parentNode.insertBefore(r,e)}),z.forEach(function(t,e){var r=C[e].ghost;r.parentNode.insertBefore(t.elm,r),r.parentNode.removeChild(r)}))}r(t)&&(t=d.querySelectorAll(t)),0===t.length&&console.warn("No elements to sort");var C,F,x=d.createDocumentFragment(),A=[],z=[],E=[],M=[],k=!0;return n.apply(l,Array.prototype.slice.call(arguments,1)),u(),g(),S(),z.map(function(t){return t.elm})}function e(t,e){var a,o=t.elm;return e.selector&&(e.bFilter?o.matchesSelector(e.selector)||(o=l):o=o.querySelector(e.selector)),e.bAttr?a=o.getAttribute(e.attr):e.useVal?a=o.value:e.bData?a=o.getAttribute("data-"+e.data):o&&(a=o.textContent),r(a)&&(e.cases||(a=a.toLowerCase()),a=a.replace(/\s+/g," ")),a}function r(t){return"string"==typeof t}function a(t,e){for(var r,a=t.length,o=a;o--;)r=a-o-1,e(t[r],r)}function o(t,e,r){for(var a in e)(r||t[a]===s)&&(t[a]=e[a]);return t}function n(t,e,r){m.push({prepare:t,sort:e,sortBy:r})}var s,i=!1,l=null,c=window,d=c.document,f=parseFloat,u=Array.prototype.indexOf,p=/(-?\d+\.?\d*)$/g,h=/(\d+\.?\d*)$/g,m=[],v=0,b=0,g="2.1.0",w={selector:l,order:"asc",attr:l,data:l,useVal:i,place:"start",returns:i,cases:i,forceStrings:i,ignoreDashes:i,sortFunction:l};return c.Element&&function(t){t.matchesSelector=t.matchesSelector||t.mozMatchesSelector||t.msMatchesSelector||t.oMatchesSelector||t.webkitMatchesSelector||function(t){for(var e=this,r=(e.parentNode||e.document).querySelectorAll(t),a=-1;r[++a]&&r[a]!=e;);return!!r[a]}}(Element.prototype),o(n,{indexOf:u,loop:a}),o(t,{plugin:n,version:g,defaults:w})}()),function(t){function e(t){var e=t.data("bootstrap-sortable-context");return null==e&&(e={bsSort:[],lastSort:null},t.data("bootstrap-sortable-context",e)),e}function r(t,e){tinysort(t,e)}function a(r,s){var i=parseFloat(r.attr("data-sortcolumn")),l=e(s),c=l.bsSort,d=r.attr("colspan");if(d){var f=Math.min(d-1,parseFloat(r.data("mainsort"))||0),u=parseFloat(r.data("sortkey").split("-").pop());if(s.find("thead tr").length-1>u)return void a(s.find('[data-sortkey="'+(i+f)+"-"+(u+1)+'"]'),s);i+=f}var p=r.attr("data-defaultsign")||o;if(s.find("th").each(function(){t(this).removeClass("up").removeClass("down").addClass("nosort")}),t.browser.mozilla){var h=s.find("div.mozilla");void 0!==h&&(h.find(".sign").remove(),h.parent().html(h.html())),r.wrapInner('<div class="mozilla"></div>'),r.children().eq(0).append('<span class="sign '+p+'"></span>')}else s.find("span.sign").remove(),r.append('<span class="sign '+p+'"></span>');var m=r.attr("data-sortkey"),v="desc"!==r.attr("data-firstsort")?"desc":"asc";l.lastSort=m,c[m]="asc"===(c[m]||v)?"desc":"asc","desc"===c[m]?(r.find("span.sign").addClass("up"),r.addClass("up").removeClass("down nosort")):r.addClass("down").removeClass("up nosort");var b=s.children("tbody").children("tr");n(b,{selector:"td:nth-child("+(i+1)+")",order:c[m],data:"value"}),s.find("td.sorted, th.sorted").removeClass("sorted"),b.find("td:eq("+i+")").addClass("sorted"),r.addClass("sorted")}var o,n,s=t(document);if(t.bootstrapSortable=function(s,i,l){var c="undefined"!=typeof moment;o=i?i:"arrow","default"==l&&(l=r),n=l||n||r,t("table.sortable").each(function(){var r=t(this),o=e(r),n=o.bsSort;s=s===!0,r.find("span.sign").remove(),r.find("thead [colspan]").each(function(){for(var e=parseFloat(t(this).attr("colspan")),r=1;e>r;r++)t(this).after('<th class="colspan-compensate">')}),r.find("thead [rowspan]").each(function(){for(var e=t(this),r=parseFloat(e.attr("rowspan")),a=1;r>a;a++){var o=e.parent("tr"),n=o.next("tr"),s=o.children().index(e);n.children().eq(s).before('<th class="rowspan-compensate">')}}),r.find("thead tr").each(function(e){t(this).find("th").each(function(r){var a=t(this);a.addClass("nosort").removeClass("up down"),a.attr("data-sortcolumn",r),a.attr("data-sortkey",r+"-"+e)})}),r.find("thead .rowspan-compensate, .colspan-compensate").remove(),r.find("td").each(function(){var e=t(this);void 0!==e.attr("data-dateformat")&&c?e.attr("data-value",moment(e.text(),e.attr("data-dateformat")).format("YYYY/MM/DD/HH/mm/ss")):void 0===e.attr("data-value")&&e.attr("data-value",e.text())}),r.find('thead th[data-defaultsort!="disabled"]').each(function(){var e=t(this),r=e.closest("table.sortable");e.data("sortTable",r);var i=e.attr("data-sortkey"),l=s?o.lastSort:-1;n[i]=s?n[i]:e.attr("data-defaultsort"),void 0!==n[i]&&s===(i===l)&&(n[i]="asc"===n[i]?"desc":"asc",a(e,r))}),r.trigger("sorted")})},s.on("click",'table.sortable thead th[data-defaultsort!="disabled"]',function(){var e=t(this),r=e.data("sortTable")||e.closest("table.sortable");r.trigger("before-sort"),a(e,r),r.trigger("sorted")}),!t.browser){t.browser={chrome:!1,mozilla:!1,opera:!1,msie:!1,safari:!1};var i=navigator.userAgent;t.each(t.browser,function(e){t.browser[e]=new RegExp(e,"i").test(i)?!0:!1,t.browser.mozilla&&"mozilla"===e&&(t.browser.mozilla=new RegExp("firefox","i").test(i)?!0:!1),t.browser.chrome&&"safari"===e&&(t.browser.safari=!1)})}t(t.bootstrapSortable)}(jQuery);
+/*! tinysort.js
+ * version: 2.1.1
+ * author: Ron Valstar (http://www.sjeiti.com/)
+ * license: MIT/GPL
+ * build: 2015-01-05
+ */
+!function (a, b) { "use strict"; function c() { return b } "function" == typeof define && define.amd ? define("tinysort", c) : a.tinysort = b }(this, function () { "use strict"; function a(a) { function f() { 0 === arguments.length ? j({}) : d(arguments, function (a) { j(c(a) ? { selector: a } : a) }), q = C.length } function j(a) { var b = !!a.selector, c = b && ":" === a.selector[0], d = e(a || {}, t); C.push(e({ bFind: b, bAttr: !(d.attr === i || "" === d.attr), bData: d.data !== i, bFilter: c, mFilter: i, fnSort: d.sortFunction, iAsc: "asc" === d.order ? 1 : -1 }, d)) } function m() { d(a, function (a, b) { x ? x !== a.parentNode && (D = !1) : x = a.parentNode; var c = C[0], d = c.bFilter, e = c.selector, f = !e || d && a.matchesSelector(e) || e && a.querySelector(e), g = f ? A : B, h = { elm: a, pos: b, posn: g.length }; z.push(h), g.push(h) }), w = A.slice(0) } function s() { A.sort(u) } function u(a, e) { var f = 0; for (0 !== r && (r = 0) ; 0 === f && q > r;) { var i = C[r], j = i.ignoreDashes ? o : n; if (d(p, function (a) { var b = a.prepare; b && b(i) }), i.sortFunction) f = i.sortFunction(a, e); else if ("rand" == i.order) f = Math.random() < .5 ? 1 : -1; else { var k = h, m = b(a, i), s = b(e, i); if (!i.forceStrings) { var t = c(m) ? m && m.match(j) : h, u = c(s) ? s && s.match(j) : h; if (t && u) { var v = m.substr(0, m.length - t[0].length), w = s.substr(0, s.length - u[0].length); v == w && (k = !h, m = l(t[0]), s = l(u[0])) } } f = m === g || s === g ? 0 : i.iAsc * (s > m ? -1 : m > s ? 1 : 0) } d(p, function (a) { var b = a.sort; b && (f = b(i, k, m, s, f)) }), 0 === f && r++ } return 0 === f && (f = a.pos > e.pos ? 1 : -1), f } function v() { var a = A.length === z.length; D && a ? (A.forEach(function (a) { y.appendChild(a.elm) }), x.appendChild(y)) : (A.forEach(function (a) { var b = a.elm, c = k.createElement("div"); a.ghost = c, b.parentNode.insertBefore(c, b) }), A.forEach(function (a, b) { var c = w[b].ghost; c.parentNode.insertBefore(a.elm, c), c.parentNode.removeChild(c) })) } c(a) && (a = k.querySelectorAll(a)), 0 === a.length && console.warn("No elements to sort"); var w, x, y = k.createDocumentFragment(), z = [], A = [], B = [], C = [], D = !0; return f.apply(i, Array.prototype.slice.call(arguments, 1)), m(), s(), v(), A.map(function (a) { return a.elm }) } function b(a, b) { var d, e = a.elm; return b.selector && (b.bFilter ? e.matchesSelector(b.selector) || (e = i) : e = e.querySelector(b.selector)), b.bAttr ? d = e.getAttribute(b.attr) : b.useVal ? d = e.value : b.bData ? d = e.getAttribute("data-" + b.data) : e && (d = e.textContent), c(d) && (b.cases || (d = d.toLowerCase()), d = d.replace(/\s+/g, " ")), d } function c(a) { return "string" == typeof a } function d(a, b) { for (var c, d = a.length, e = d; e--;) c = d - e - 1, b(a[c], c) } function e(a, b, c) { for (var d in b) (c || a[d] === g) && (a[d] = b[d]); return a } function f(a, b, c) { p.push({ prepare: a, sort: b, sortBy: c }) } var g, h = !1, i = null, j = window, k = j.document, l = parseFloat, m = Array.prototype.indexOf, n = /(-?\d+\.?\d*)$/g, o = /(\d+\.?\d*)$/g, p = [], q = 0, r = 0, s = "2.1.0", t = { selector: i, order: "asc", attr: i, data: i, useVal: h, place: "start", returns: h, cases: h, forceStrings: h, ignoreDashes: h, sortFunction: i }; return j.Element && function (a) { a.matchesSelector = a.matchesSelector || a.mozMatchesSelector || a.msMatchesSelector || a.oMatchesSelector || a.webkitMatchesSelector || function (a) { for (var b = this, c = (b.parentNode || b.document).querySelectorAll(a), d = -1; c[++d] && c[d] != b;); return !!c[d] } }(Element.prototype), e(f, { indexOf: m, loop: d }), e(a, { plugin: f, version: s, defaults: t }) }());
+
+(function ($) {
+
+    var $document = $(document),
+        signClass,
+        sortEngine;
+
+    $.bootstrapSortable = function (applyLast, sign, customSort) {
+
+        // Check if moment.js is available
+        var momentJsAvailable = (typeof moment !== 'undefined');
+
+        // Set class based on sign parameter
+        signClass = !sign ? "arrow" : sign;
+
+        // Set sorting algorithm
+        if (customSort == 'default')
+            customSort = defaultSortEngine;
+        sortEngine = customSort || sortEngine || defaultSortEngine;
+
+        // Set attributes needed for sorting
+        $('table.sortable').each(function () {
+            var $this = $(this),
+                context = lookupSortContext($this),
+                bsSort = context.bsSort;
+            applyLast = (applyLast === true);
+            $this.find('span.sign').remove();
+
+            // Add placeholder cells for colspans
+            $this.find('thead [colspan]').each(function () {
+                var colspan = parseFloat($(this).attr('colspan'));
+                for (var i = 1; i < colspan; i++) {
+                    $(this).after('<th class="colspan-compensate">');
+                }
+            });
+
+            // Add placeholder cells for rowspans
+            $this.find('thead [rowspan]').each(function () {
+                var $cell = $(this);
+                var rowspan = parseFloat($cell.attr('rowspan'));
+                for (var i = 1; i < rowspan; i++) {
+                    var parentRow = $cell.parent('tr');
+                    var nextRow = parentRow.next('tr');
+                    var index = parentRow.children().index($cell);
+                    nextRow.children().eq(index).before('<th class="rowspan-compensate">');
+                }
+            });
+
+            // Set indexes to header cells
+            $this.find('thead tr').each(function (rowIndex) {
+                $(this).find('th').each(function (columnIndex) {
+                    var $this = $(this);
+                    $this.addClass('nosort').removeClass('up down');
+                    $this.attr('data-sortcolumn', columnIndex);
+                    $this.attr('data-sortkey', columnIndex + '-' + rowIndex);
+                });
+            });
+
+            // Cleanup placeholder cells
+            $this.find('thead .rowspan-compensate, .colspan-compensate').remove();
+
+            // Initialize sorting values
+            $this.find('td').each(function () {
+                var $this = $(this);
+                if ($this.attr('data-dateformat') !== undefined && momentJsAvailable) {
+                    $this.attr('data-value', moment($this.text(), $this.attr('data-dateformat')).format('YYYY/MM/DD/HH/mm/ss'));
+                }
+                else {
+                    $this.attr('data-value') === undefined && $this.attr('data-value', $this.text());
+                }
+            });
+            $this.find('thead th[data-defaultsort!="disabled"]').each(function (index) {
+                var $this = $(this);
+                var $sortTable = $this.closest('table.sortable');
+                $this.data('sortTable', $sortTable);
+                var sortKey = $this.attr('data-sortkey');
+                var thisLastSort = applyLast ? context.lastSort : -1;
+                bsSort[sortKey] = applyLast ? bsSort[sortKey] : $this.attr('data-defaultsort');
+                if (bsSort[sortKey] !== undefined && (applyLast === (sortKey === thisLastSort))) {
+                    bsSort[sortKey] = bsSort[sortKey] === 'asc' ? 'desc' : 'asc';
+                    doSort($this, $sortTable);
+                }
+            });
+            $this.trigger('sorted');
+        });
+    };
+
+    // Add click event to table header
+    $document.on('click', 'table.sortable thead th[data-defaultsort!="disabled"]', function (e) {
+        var $this = $(this), $table = $this.data('sortTable') || $this.closest('table.sortable');
+        $table.trigger('before-sort');
+        doSort($this, $table);
+        $table.trigger('sorted');
+    });
+
+    // Look up sorting data appropriate for the specified table (jQuery element).
+    // This allows multiple tables on one page without collisions.
+    function lookupSortContext($table) {
+        var context = $table.data("bootstrap-sortable-context");
+        if (context == null) {
+            context = { bsSort: [], lastSort: null };
+            $table.data("bootstrap-sortable-context", context);
+        }
+        return context;
+    }
+
+    function defaultSortEngine(rows, sortingParams) {
+        tinysort(rows, sortingParams);
+    }
+
+    // Sorting mechanism separated
+    function doSort($this, $table) {
+        var sortColumn = parseFloat($this.attr('data-sortcolumn')),
+            context = lookupSortContext($table),
+            bsSort = context.bsSort;
+
+        var colspan = $this.attr('colspan');
+        if (colspan) {
+            var mainSort = Math.min(colspan - 1, parseFloat($this.data('mainsort')) || 0);
+            var rowIndex = parseFloat($this.data('sortkey').split('-').pop());
+
+            // If there is one more row in header, delve deeper
+            if ($table.find('thead tr').length - 1 > rowIndex) {
+                doSort($table.find('[data-sortkey="' + (sortColumn + mainSort) + '-' + (rowIndex + 1) + '"]'), $table);
+                return;
+            }
+            // Otherwise, just adjust the sortColumn
+            sortColumn = sortColumn + mainSort;
+        }
+
+        var localSignClass = $this.attr('data-defaultsign') || signClass;
+
+        // update arrow icon
+        $table.find('th').each(function () {
+            $(this).removeClass('up').removeClass('down').addClass('nosort');
+        });
+
+        if ($.browser.mozilla) {
+            var moz_arrow = $table.find('div.mozilla');
+            if (moz_arrow !== undefined) {
+                moz_arrow.find('.sign').remove();
+                moz_arrow.parent().html(moz_arrow.html());
+            }
+            $this.wrapInner('<div class="mozilla"></div>');
+            $this.children().eq(0).append('<span class="sign ' + localSignClass + '"></span>');
+        }
+        else {
+            $table.find('span.sign').remove();
+            $this.append('<span class="sign ' + localSignClass + '"></span>');
+        }
+
+        // sort direction
+        var sortKey = $this.attr('data-sortkey');
+        var initialDirection = $this.attr('data-firstsort') !== 'desc' ? 'desc' : 'asc';
+
+        context.lastSort = sortKey;
+        bsSort[sortKey] = (bsSort[sortKey] || initialDirection) === 'asc' ? 'desc' : 'asc';
+        if (bsSort[sortKey] === 'desc') {
+            $this.find('span.sign').addClass('up');
+            $this.addClass('up').removeClass('down nosort');
+        } else {
+            $this.addClass('down').removeClass('up nosort');
+        }
+
+        // sort rows
+        var rows = $table.children('tbody').children('tr');
+        sortEngine(rows, { selector: 'td:nth-child(' + (sortColumn + 1) + ')', order: bsSort[sortKey], data: 'value' });
+
+        // add class to sorted column cells
+        $table.find('td.sorted, th.sorted').removeClass('sorted');
+        rows.find('td:eq(' + sortColumn + ')').addClass('sorted');
+        $this.addClass('sorted');
+    }
+
+    // jQuery 1.9 removed this object
+    if (!$.browser) {
+        $.browser = { chrome: false, mozilla: false, opera: false, msie: false, safari: false };
+        var ua = navigator.userAgent;
+        $.each($.browser, function (c) {
+            $.browser[c] = ((new RegExp(c, 'i').test(ua))) ? true : false;
+            if ($.browser.mozilla && c === 'mozilla') { $.browser.mozilla = ((new RegExp('firefox', 'i').test(ua))) ? true : false; }
+            if ($.browser.chrome && c === 'safari') { $.browser.safari = false; }
+        });
+    }
+
+    // Initialise on DOM ready
+    $($.bootstrapSortable);
+
+}(jQuery));
