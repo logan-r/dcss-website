@@ -277,7 +277,22 @@ function networkError(error) {
 }
 
 /////// Per-page entry logic goes here
-if ($( "#live-games-tiles" ).length) {
-    var data = $.get("dgl-status.json");
-    data.done(setPlayerCaptions);
-}
+$(function() {
+    // index.html
+    if ($( "#live-games-tiles" ).length) {
+        var data = $.get("dgl-status.json");
+        data.done(setPlayerCaptions);
+    }
+    // play.html
+    if ($( "#play-status" ).length) {
+        servers = $.get( "servers.json" );
+        servers.done(handleServerList);
+        servers.fail(failServerList);
+        navigator.geolocation.getCurrentPosition(knownPosition, unknownPosition);
+    }
+    // watch.html
+    if ($( "#livegames" ).length) {
+        var data = $.get('dgl-status.json');
+        data.done(fillPlayerTable).fail(networkError);
+    }
+});

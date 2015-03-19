@@ -12,6 +12,9 @@ all:
 
 # for development
 quick:
+	rm -rf _site
+	cp -r site _site
+	#grunt
 	s3_website push
 
 clean:
