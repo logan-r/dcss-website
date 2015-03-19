@@ -5,6 +5,9 @@
     "grunt": "~0.4.5",
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-uglify": "~0.8.0",
-    "grunt-contrib-htmlmin": "~0.4.0"
+    "grunt-contrib-htmlmin": "~0.4.0",
+    "feedparser": "~1.0.0",
+    "request": "~2.53.0",
+    "cheerio": "~0.18.0"
   }
 }
