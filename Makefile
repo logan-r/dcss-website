@@ -4,3 +4,6 @@ all:
 	# Create feed.rss
 	wget --no-check-certificate -O _site/feed.rss https://crawl.develz.org/wordpress/feed
 	s3_website push
+
+quick:
+	s3_website push
