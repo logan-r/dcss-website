@@ -16,11 +16,23 @@ module.exports = function(grunt) {
           '_site/watch.html': '_site/watch.html'
         }
       }
+    },
+    uglify: {
+      build: {
+        files: [{
+          expand: true,
+          cwd: '_site/js',
+          src: '*.js',
+          dest: '_site/js'
+      }]
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.registerTask('default', ['htmlmin']);
+  grunt.registerTask('default', ['uglify']);
 
 };
