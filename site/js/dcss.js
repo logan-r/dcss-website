@@ -2,14 +2,14 @@
 // http://www.davidjuth.com/rest-demo-jquery-rss.aspx
 function updateFeed(data) {
     $('#newsContainer').append("<ul>");
-    $(data).find('item').slice(0, 4).each(function() {  
-        var $item = $(this);  
-        var title = $item.find('title').text();  
-        var link = $item.find('link').text();  
+    $(data).find('item').slice(0, 4).each(function() {
+        var $item = $(this);
+        var title = $item.find('title').text();
+        var link = $item.find('link').text();
 
-        var html = "<a href=\"" + link + "\"><li>" + title + "</a></li>";  
+        var html = "<a href=\"" + link + "\"><li>" + title + "</a></li>";
 
-        $('#newsContainer').append(html);  
+        $('#newsContainer').append(html);
     });
     $('#newsContainer').append("</ul>");
 }
