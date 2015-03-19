@@ -1,6 +1,7 @@
 // Convert RSS feed into news list
 // http://www.davidjuth.com/rest-demo-jquery-rss.aspx
 function updateFeed(data) {
+    // XXX: EVIL
     $('#newsContainer').append("<ul>");
     $(data).find('item').slice(0, 4).each(function() {
         var $item = $(this);
