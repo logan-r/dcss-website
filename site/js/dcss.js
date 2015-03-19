@@ -86,14 +86,14 @@ function setPlayerCaptions(data) {
              }
         }
         // Note that we might not have enough candidates at this point
-        if (selected_candidates.length <  $( "#tiles div" ).length) {
+        if (selected_candidates.length <  $( "#live-games-tiles div" ).length) {
             console.log("Warning: only found " + selected_candidates.length + " candidates.");
         }
         selected_candidates = shuffleArray(selected_candidates);
         selected_image_candidates = shuffleArray(getRandomSubarray(image_candidates, selected_candidates.length));
 
         // Create & write our tiles
-        $( "#tiles" ).empty();
+        $( "#live-games-tiles" ).empty();
         for (var i = 0; i < selected_candidates.length; i++) {
             c = selected_candidates[i];
             e = $( "<div>" );
@@ -122,21 +122,21 @@ function setPlayerCaptions(data) {
             );
             e.append($("<p/>").append($("<em/>").text(getFlavourLine(c))));
 
-            $( "#tiles" ).append(e);
+            $( "#live-games-tiles" ).append(e);
 
             // Add in clearfix classes if required
             if (i > 0 && i != selected_candidates.length) {
                 if ((i+1) % 2 == 0) {
-                    $( "#tiles" ).append($("<div/>").addClass("clearfix visible-sm"));
+                    $( "#live-games-tiles" ).append($("<div/>").addClass("clearfix visible-sm"));
                 }
                 if ((i+1) % 3 == 0) {
-                    $( "#tiles" ).append($("<div/>").addClass("clearfix visible-md visible-lg"));
+                    $( "#live-games-tiles" ).append($("<div/>").addClass("clearfix visible-md visible-lg"));
                 }
             }
 
         }
 
-        $( "#dcss-online-link" ).text("See all " + data.length + " online games...");
+        $( "#live-games-link" ).text("See all " + data.length + " online games...");
 }
 function getFlavourLine(game) {
     // This function is given a dgl-status game and returns an interesting string about it.
@@ -276,3 +276,8 @@ function networkError(error) {
     $( "#livegames tbody" ).append(tr);
 }
 
+/////// Per-page entry logic goes here
+if ($( "#live-games-tiles" ).length) {
+    var data = $.get("dgl-status.json");
+    data.done(setPlayerCaptions);
+}
