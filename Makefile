@@ -1,4 +1,9 @@
-all:
+# These are the shortcuts users should use
+all : | clean site
+quick : | clean quicksite
+
+.PHONY: clean site quicksite
+site:
 	# Create temp deploy copy
 	cp -r site _site
 	# Create dgl-status.json
@@ -10,11 +15,10 @@ all:
 	# Upload to s3 / invalidate CF
 	s3_website push
 
-# for development
-quick:
-	rm -rf _site
+# for development, skip external fetches
+quicksite:
 	cp -r site _site
-	#grunt
+	grunt
 	s3_website push
 
 clean:
