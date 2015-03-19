@@ -1,2 +1,3 @@
-dgl-status.json
+_site/dgl-status.json
 .env
+node_modules

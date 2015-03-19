@@ -1,30 +1,36 @@
 # DCSS Website Readme
 
-Currently visible at https://crawl.project357.org/static/dcss-web/index.htm
+This is the Dungeon Crawl Stone Soup landing page, intended to run on a
+standalone domain as the "homepage" of DCSS. It's implemented as an
+Amazon S3 bucket + Cloudfront distribution, which gives good global
+performance at negligible cost.
 
-This is a small readme to describe what everything is for/how it works.
+The current AWS account maintainer is Alex "chequers" Jurkiewicz.
 
-For background information, see the crawl-ref-discuss thread "Proposal: website visual refresh" from 24 Jan 2015.
+## System Requirements
 
-## Static Content
+* Python 2
+* s3_website (`gem install s3_website`)
 
-Simple static web content:
+## Updating the live website
 
-* index.htm
-* play.htm -- geolocates your closest server and redirects you to it
-* download.htm -- information for offline downloads
-* about.htm -- background information about DCSS
-* splashimgs/ -- images that form the frontpage carousel
-* bootstrap-\*/ -- bootstrap resources (css, js, fonts)
-* servers.json -- static hardcoded list of DCSS servers
-* feed.rss -- placeholder for the real Wordpress blog feed (during testing, the real URL is on another domain)
+You need to update the website every few minutes, so spectator data is live.
 
-## Dynamic Content
+* Change directory to the root of this repository.
+* Add your AWS credentials to .env:
+  ```
+  S3_ID: xxx
+  S3_SECRET: xxx
+  ```
+* Run `make`. This will take several minutes.
 
-* dgl-status-collect.py -- should be run from cron every few minutes to generate dgl-status, which is a user-accessible file
+## Static content compression.
 
-## Minification, compression & etc
+* *png*: Optionally perform a lossy compresion step with
+  `pngquant 64 file.png` (64 = ncolours, tweak as neccessary), and always
+  lossless compress with `advpng -z4 file.png`.
+  Lossy compression is fantastic for DCSS screenshots and similar sprite
+  images.
+* *html, css, js, json, rss*: These files will be compressed by s3_website
+  during upload, so don't worry about that.
 
-All locally hosted css & js should be minified.
-
-All locally hosted PNGs should be losslessly compressed with pngcrush/pngout and then likely lossy compressed with pngquant: `pngquant 64 img.png` will create a 64-colour dithered version of the image. This will generally reduce dcss screenshot size to a quarter of the original with minimal perceptual changes.
