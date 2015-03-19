@@ -272,19 +272,16 @@ function networkError(error) {
 $(function() {
     // index.html
     if ($( "#live-games-tiles" ).length) {
-        var data = $.get("dgl-status.json");
-        data.done(setPlayerCaptions);
+        $.get("dgl-status.json").done(setPlayerCaptions);
+        $.get("feed.rss").done(updateFeed);
     }
     // play.html
     if ($( "#play-status" ).length) {
-        servers = $.get( "servers.json" );
-        servers.done(handleServerList);
-        servers.fail(failServerList);
+        $.get( "servers.json" ).done(handleServerList).fail(failServerList);
         navigator.geolocation.getCurrentPosition(knownPosition, unknownPosition);
     }
     // watch.html
     if ($( "#livegames" ).length) {
-        var data = $.get('dgl-status.json');
-        data.done(fillPlayerTable).fail(networkError);
+        $.get('dgl-status.json').done(fillPlayerTable).fail(networkError);
     }
 });
