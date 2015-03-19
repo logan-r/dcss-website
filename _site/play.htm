@@ -8,75 +8,8 @@
 
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
-        <script>
-            servers = $.get( "servers.json" );
-            servers.done(handleServerList);
-            servers.fail(failServerList);
-            navigator.geolocation.getCurrentPosition(knownPosition, unknownPosition);
-
-            function handleServerList(servers) {
-                server_list = servers // ugly pt. 1
-                $( "#play-list" ).empty();
-                var arrayLength = servers.length;
-                for (var i = 0; i < arrayLength; i++) {
-                    $( "#play-list" ).append("<li>" + servers[i]['location'] + ": " + "<a href=\"" + servers[i]['url'] + "\">" + servers[i]['name'] + "</a>" + "</li>");
-                }
-            }
-            function failServerList() {
-                $( "#play-list" ).empty();
-                $( "#play-list-message" ).html("<li>Couldn't get server list :(</li>");
-            }
-            function knownPosition(position) {
-                servers.always(); // ugly pt. 2. We're passing the server list into this function via global variable
-                server = NearestPoint( position.coords.latitude, position.coords.longitude, server_list );
-                $( "#play-status" ).text("Playing on " + server["name"] + " located in " + server["location"] + "...");
-                setTimeout( function() {
-                    window.location = server["url"];
-                    }, 2000);
-            }
-            function unknownPosition(error) {
-                $( "#play-status" ).text("Can't get your location :(");
-                $( "#play-list-message" ).text("Select a server manually:");
-            }
-
-            // Adapted from
-            // http://stackoverflow.com/questions/21279559/geolocation-closest-locationlat-long-from-my-position
-            // Convert Degress to Radians
-            function Deg2Rad( deg ) {
-            return deg * Math.PI / 180;
-            }
-
-            function PythagorasEquirectangular( lat1, lon1, lat2, lon2 )
-            {
-            lat1 = Deg2Rad(lat1);
-            lat2 = Deg2Rad(lat2);
-            lon1 = Deg2Rad(lon1);
-            lon2 = Deg2Rad(lon2);
-            var R = 6371; // km
-            var x = (lon2-lon1) * Math.cos((lat1+lat2)/2);
-            var y = (lat2-lat1);
-            var d = Math.sqrt(x*x + y*y) * R;
-            return d;
-            }
-
-            function NearestPoint( latitude, longitude, points )
-            {
-                var mindif=99999;
-                var closest;
-        
-                for (index = 0; index < points.length; ++index) {
-                    var dif =  PythagorasEquirectangular( latitude, longitude, points[ index ][ "latlongdecimal" ][0], points[ index ][ "latlongdecimal" ][1] );
-                    if ( dif < mindif )
-                    {
-                        closest=index;
-                        mindif = dif;
-                    }
-                }
-
-                return points[closest];
-            }
-        </script>
+        <script src="js/dcss.js"></script>
+        <script src="js/play.js"></script>
     </head>
     <body>
         <div class="container">

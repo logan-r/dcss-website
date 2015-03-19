@@ -15,49 +15,8 @@
         <!-- Watch page specific -->
         <script src="js/bootstrap-sortable.js"></script>
 
-        <script>
-            function fillPlayerTable(games) {
-                $( "#livegames tbody" ).empty();
-                for (var i = 0; i < games.length; i++) {
-                    e = games[i];
-                    tr = $( "<tr/>" );
-                    tr.append($("<td/>").text(e['name']));
-                    tr.append($("<td/>").text(e['version']));
-                    tr.append($("<td/>").text(e['XL']));
-                    tr.append($("<td/>").text(e['species']));
-                    tr.append($("<td/>").text(e['background']));
-                    if (e['branch']) {
-                        if (e['branchlevel'] != 0) {
-                            tr.append($("<td/>").text(e['branch'] + ":" + e['branchlevel']));
-                        } else {
-                            tr.append($("<td/>").text(e['branch']));
-                        }
-                    } else {
-                        tr.append($("<td/>"));
-                    }
-                    if (e['idle'] >= 300) {
-                         tr.append($("<td/>").text("Over 5 minutes").attr('data-value', e['idle']));
-                    } else if (e['idle'] >= 60) {
-                         tr.append($("<td/>").text(Math.round(e['idle'] / 60) + " minutes").attr('data-value', e['idle']));
-                    } else {
-                         tr.append($("<td/>").text(e['idle'] + " seconds").attr('data-value', e['idle']));
-                    }
-                    tr.append($("<td/>").text(e['viewers']));
-                    tr.append($("<td/>").append($("<a/>").text("Watch now.").attr('href', e['watchurl'])));
-                    $( "#livegames tbody" ).append(tr);
-                }
-                $.bootstrapSortable();
-
-            }
-            function networkError(error) {
-                $( "#livegames tbody" ).empty();
-                tr = $( "<tr/>" );
-                tr.append($("<td/>").text("Network error, try again :("));
-                $( "#livegames tbody" ).append(tr);
-            }
-            var data = $.get('dgl-status.json');
-            data.done(fillPlayerTable).fail(networkError);
-        </script>
+        <script src="js/dcss.js"></script>
+        <script src="js/watch.js"></script>
     </head>
     <body>
         <div class="container">
