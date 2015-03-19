@@ -13,6 +13,7 @@ import traceback
 import ssl
 import httplib
 import socket
+import logging
 
 SP_TABLE = {'Mf': 'Merfolk', 'Ke': 'Kenku*', 'MD': 'Mountain Dwarf*', 'Og': 'Ogre', 'Na': 'Naga', 'DD': 'Deep Dwarf', 'DE': 'Deep Elf', 'Tr': 'Troll', 'Mu': 'Mummy', 'GE': 'Grey Elf*', 'VS': 'Vine Stalker', 'HO': 'Hill Orc', 'Sp': 'Spriggan', 'Te': 'Tengu', 'HD': 'Hill Dwarf*', 'HE': 'High Elf', 'El': 'Elf*', 'OM': 'Ogre-Mage*', 'Dj': 'Djinni*', 'Gr': 'Gargoyle', 'Ko': 'Kobold', 'Dg': 'Demigod', 'Gh': 'Ghoul', 'Fo': 'Formicid', 'Ce': 'Centaur', 'Hu': 'Human', 'Vp': 'Vampire', 'Op': 'Octopode', 'Mi': 'Minotaur', 'Pl': 'Plutonian*', 'LO': 'Lava Orc*', 'Gn': 'Gnome*', 'Ha': 'Halfling', 'Dr': 'Draconian', 'Ds': 'Demonspawn', 'SE': 'Sludge Elf*', 'Fe': 'Felid'}
 BG_TABLE = {'Pr': 'Priest*', 'CK': 'Chaos Knight', 'AE': 'Air Elementalist', 'DK': 'Death Knight', 'Cj': 'Conjurer', 'EE': 'Earth Elementalist', 'Mo': 'Monk', 'AM': 'Arcane Marksman', 'Ne': 'Necromancer', 'Su': 'Summoner', 'VM': 'Venom Mage', 'Sk': 'Skald', 'Re': 'Reaver*', 'Pa': 'Paladin*', 'FE': 'Fire Elementalist', 'Th': 'Thief*', 'Cr': 'Crusader*', 'St': 'Stalker*', 'IE': 'Ice Elementalist', 'Be': 'Berserker', 'En': 'Enchanter', 'Wn': 'Wanderer', 'Jr': 'Jester*', 'Hu': 'Hunter', 'AK': 'Abyssal Knight', 'As': 'Assassin', 'Ar': 'Artificer', 'Wr': 'Warper', 'Fi': 'Fighter', 'Gl': 'Gladiator', 'Tm': 'Transmuter', 'Wz': 'Wizard', 'He': 'Healer'}
@@ -24,24 +25,20 @@ def get_milestone(nick):
     try:
         response = urllib2.urlopen(url, timeout=5)
     except (urllib2.URLError, httplib.BadStatusLine, socket.timeout) as e:
-        if not QUIET:
-            print "Warning: couldn't grab milestone %s (%s)" % (url, e)
+        logging.warning("Couldn't grab milestone %s (%s)" % (url, e))
         return None
     if response.getcode() != 200:
-        if not QUIET:
-            print "Warning: %s returned status code %s, skipping." % (url, response.getcode())
+        logging.warning("%s returned status code %s, skipping." % (url, response.getcode()))
         return None
     try:
         data = response.read()
     except ssl.SSLError as e:
-        if not QUIET:
-            print "Warning: couldn't read milestone %s (%s)" % (url, e)
+        logging.warning("Couldn't read milestone %s (%s)" % (url, e))
         return None
     try:
         json_response = json.loads(data)
     except StandardError:
-        if not QUIET:
-            print "Warning: couldn't parse milestone for %s, skipping. (%s)" % (nick, data)
+        logging.warning("Couldn't parse milestone for %s, skipping. (%s)" % (nick, data))
         return None
     if "records" not in json_response or not json_response["records"]:
         # no milestones for character -- sequell's fetcher hasn't catch up with a new account yet
@@ -131,26 +128,25 @@ def get_games(servers):
         url = server.get('dgl-status')
         if not url:
             continue
+        logging.info("Loading %s" % url)
         try:
             response = urllib2.urlopen(url, timeout=5)
         except (urllib2.URLError, socket.timeout) as e:
-            if not QUIET:
-                print "Warning: couldn't grab dgl-status %s (%s)" % (url, e)
+            logging.warning("Couldn't grab dgl-status %s (%s)" % (url, e))
             continue
         if response.getcode() != 200:
-            if not QUIET:
-                print "Warning: dgl-status %s returned status code %s, skipping." % (url, response.getcode())
+            logging.warning("dgl-status %s returned status code %s, skipping." % (url, response.getcode()))
             continue
-        for line in response.read().splitlines():
+        lines = response.read().splitlines()
+        logging.info("Processing %s games" % len(lines))
+        for line in lines:
             try:
                 game = parse_line(line)
             except StandardError as e:
-                if not QUIET:
-                    print "Warning: couldn't parse line '%s' from %s." % (line, server['name'])
+                logging.warning("Couldn't parse line '%s' from %s." % (line, server['name']))
                 continue
             if not game:
-                if not QUIET:
-                    print "Warning: ignoring line '%s' from %s (doesn't have 4-6 # characters)" % (line, url)
+                logging.warning("Ignoring line '%s' from %s (doesn't have 4-6 # characters)" % (line, url))
                 continue
             game['source'] = server['shortname']
             if 'watchurl' in server:
@@ -168,8 +164,7 @@ def load_servers(servers_json):
     try:
         SERVERS = json.load(open(SERVERS_JSON, 'r'))
     except StandardError:
-        print "Error: couldn't load %s!" % SERVERS
-        print traceback.format_exc()
+        logging.exception("Error: couldn't load %s!" % SERVERS)
         sys.exit(1)
     return SERVERS
 
@@ -177,7 +172,7 @@ def main(servers, outfile):
     try:
         dump_games(get_games(servers), outfile)
     except StandardError as e:
-        print "Error: unhandled exception::\n%s" % traceback.format_exc()
+        logging.exception("Error: unhandled exception.")
         sys.exit(1)
 
 def acquire_lock(lockfile):
@@ -189,29 +184,34 @@ def acquire_lock(lockfile):
     time.sleep(1) # realllly crappy lock race protection
     with open(lockfile, 'r') as f:
         if f.read() != str(os.getpid()):
-            print "Error: something overwrote our new lockfile?!"
+            logging.error("Something overwrote our new lockfile?!")
             sys.exit(1)
 
 def release_lock(lockfile):
     try:
         os.unlink(lockfile)
     except OSError as e:
-        print "Error: couldn't release lock (%s)" % e
+        logging.error("Couldn't release lock (%s)" % e)
         sys.exit(1)
 
 if __name__ == '__main__':
-    if len(sys.argv) != 4:
+    if not 3 < len(sys.argv) < 6:
         print 'error: incorrect number of arguments'
-        print 'usage: %s [-q] servers.json outfile lockfile' % sys.argv[0]
+        print 'usage: %s [-q|-v] servers.json outfile lockfile' % sys.argv[0]
         print 'eg: %s /var/www/servers.json /var/www/dgl-status.json /tmp/dgl-status-collect.lock' % sys.argv[0]
         sys.exit(1)
 
     # Quiet silences warnings, but not errors
     if sys.argv[1] == '-q':
-        QUIET = True
+        loglevel = logging.ERROR
+        del(sys.argv[1])
+    elif sys.argv[1] == '-v':
+        loglevel = logging.INFO
         del(sys.argv[1])
     else:
-        QUIET = False
+        loglevel = logging.WARNING
+    logging.getLogger().setLevel(loglevel)
+
     SERVERS_JSON = sys.argv[1]
     OUTFILE = sys.argv[2]
     LOCKFILE = sys.argv[3]
@@ -221,5 +221,7 @@ if __name__ == '__main__':
     acquire_lock(LOCKFILE)
     try:
         main(SERVERS, OUTFILE)
+    except KeyboardInterrupt:
+        print
     finally:
         release_lock(LOCKFILE)
