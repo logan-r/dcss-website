@@ -18,6 +18,7 @@ site:
 # for development, skip slow steps
 quicksite:
 	cp -r site _site
+	build-scripts/fetch-feed.js
 	grunt
 	s3_website push
 
