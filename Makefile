@@ -1,6 +1,9 @@
 # These are the shortcuts users should use
 all : | clean site
 quick : | clean quicksite
+docs:
+	dot -Tpng architecture.dot > architecture.png
+	advpng -z architecture.png
 
 .PHONY: clean site quicksite
 site:

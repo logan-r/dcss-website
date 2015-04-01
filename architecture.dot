@@ -1,0 +1,10 @@
+digraph G {
+    user [label="Website Visitors"];
+    cdn [label="dcssgame.com (on CDN)"];
+    s3 [label="dcssgame.com s3 bucket"];
+    cdo [label="crawl.develz.org"];
+
+    user -> cdn;
+    cdn -> s3;
+    cdn -> cdo;
+}
