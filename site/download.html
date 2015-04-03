@@ -86,9 +86,9 @@
                     <h4>Ubuntu, Debian &amp; other Debian derivatives</h4>
                     <p>DCSS packages are available for i386, amd64 and armel architectures. Follow these instructions:</p>
                     <pre># Install the source repository
-echo 'deb http://crawl.develz.org/debian crawl 0.16' | sudo tee /etc/apt/sources.list
+echo 'deb https://crawl.develz.org/debian crawl 0.16' | sudo tee -a /etc/apt/sources.list
 # Install the DCSS signing key
-wget http://crawl.develz.org/debian/pubkey -O - | sudo apt-key add -
+wget https://crawl.develz.org/debian/pubkey -O - | sudo apt-key add -
 # update your package list
 sudo apt-get update
 # install console version
@@ -97,7 +97,7 @@ sudo apt-get install crawl
 sudo apt-get install crawl-tiles</pre>
                     </ul>
                     <h4>Fedora 21 & OpenSUSE</h4>
-                    <p>BlasterBlade provides Fedora packages for Crawl (tiles and console builds) in the openSUSE Build System repository. To install the tiles version, run the following (for Fedora 20, replace the 21 in the URL):</p>
+                    <p>BlasterBlade provides Fedora packages for Crawl (0.15.2 tiles and console builds) in the openSUSE Build System repository. To install the tiles version, run the following (for Fedora 20, replace the 21 in the URL):</p>
                     <pre>cd /etc/yum.repos.d/
 # Install the source repository
 sudo wget http://download.opensuse.org/repositories/home:nazar554/Fedora_21/home:nazar554.repo
