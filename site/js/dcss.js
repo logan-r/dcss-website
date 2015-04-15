@@ -1,3 +1,18 @@
+// Convert RSS feed into news list
+// http://www.davidjuth.com/rest-demo-jquery-rss.aspx
+function updateFeed(data) {
+    $('#newsContainer').append("<ul>");
+    $(data).find('item').slice(0, 4).each(function() {
+        var $item = $(this);
+        var title = $item.find('title').text();
+        var link = $item.find('link').text();
+
+        var html = "<a href=\"" + link + "\"><li>" + title + "</a></li>";
+
+        $('#newsContainer').append(html);
+    });
+    $('#newsContainer').append("</ul>");
+}
 // Replacement for underscore's _.sample helper
 // usage: getRandomSubarray(x, 5);
 // http://stackoverflow.com/questions/11935175/sampling-a-random-subset-from-an-array
@@ -257,6 +272,7 @@ $(function() {
     // index.html
     if ($( "#live-games-tiles" ).length) {
         $.get("dgl-status.json").done(setPlayerCaptions);
+        $.get("feed.rss").done(updateFeed);
     }
     // play.html
     if ($( "#play-status" ).length) {
