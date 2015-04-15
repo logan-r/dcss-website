@@ -272,7 +272,7 @@ $(function() {
     // index.html
     if ($( "#live-games-tiles" ).length) {
         $.get("dgl-status.json").done(setPlayerCaptions);
-        $.get("feed.rss").done(updateFeed);
+        $.get("https://crawl.develz.org/wordpress/feed").done(updateFeed);
     }
     // play.html
     if ($( "#play-status" ).length) {
