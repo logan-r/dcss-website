@@ -101,7 +101,7 @@ function setPlayerCaptions(data) {
             e.append(
                 $("<div/>").css('text-align', 'center').css('overflow', 'hidden').css('height', '150px').append(
                     $("<a/>").attr('href', c["watchurl"]).append(
-                        $("<img/>").attr('src', selected_image_candidates.pop()).css('position', 'relative').css('left', '100%').css('margin-left', '-200%')
+                        $("<img/>").attr('src', selected_image_candidates.pop()).css('object-fit', 'relative').css('object-position', 'center')//.css('height', '100px')
                         )
                 )
             );
