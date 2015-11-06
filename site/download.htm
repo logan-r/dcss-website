@@ -22,7 +22,7 @@
                 <div class="col-md-offset-2 col-md-8 col-sm-12">
 
                     <h2 class="text-center">Download</h2>
-                    <h5 class="text-center">Latest Stable Version: <strong>0.16.2</strong>
+                    <h5 class="text-center">Latest Stable Version: <strong>0.17.0</strong>
                     <table class="table" style="text-align: center;">
                         <thead>
                             <tr>
@@ -39,58 +39,65 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="row">Windows</th>
+                                <th scope="row">Windows Installer</th>
+                                <td colspan=2>
+                                  <ul class="list-unstyled">
+                                    <li><a href="release/stone_soup-0.17.0-win32-setup.exe">Download Tiles+Console</a></li>
+                                  </ul>
                                 <td>
-                                    <ul class="list-unstyled">
-                                        <li>32-bit: <a href="release/stone_soup-0.16.2-tiles-win32.zip">Download</a></li>
-                                        <li>64-bit: <a href="release/stone_soup-0.16.2-tiles-win64.zip">Download</a></li>
-                                    </ul>
+                            </tr>
+                            <tr>
+                                <th scope="row">Windows Zips</th>
                                 <td>
-                                    <ul class="list-unstyled">
-                                        <li>32-bit: <a href="release/stone_soup-0.16.2-win32.zip">Download</a></li>
-                                        <li>64-bit: <a href="release/stone_soup-0.16.2-win64.zip">Download</a></li>
-                                    </ul>
+                                  <ul class="list-unstyled">
+                                    <li><a href="release/stone_soup-0.17.0-tiles-win32.zip">Download</a></li>
+                                  </ul>
+                                </td>
+                                <td>
+                                  <ul class="list-unstyled">
+                                    <li><a href="release/stone_soup-0.17.0-win32.zip">Download</a></li>
+                                  </ul>
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="row">Mac OS X</th>
-                                <td><a href="release/stone_soup-0.16.2-tiles-macos.zip">Download</a></td>
-                                <td><a href="release/stone_soup-0.16.2-console-macos.zip">Download</a></td>
+                                <td><a href="release/stone_soup-0.16.2-tiles-macos.zip">Download (0.16.2)</a></td>
+                                <td><a href="release/stone_soup-0.16.2-console-macos.zip">Download (0.16.2)</a></td>
                             </tr>
                             <tr>
                                 <th scope="row">Android</th>
                                 <td>
-                                    <ul class="list-unstyled">
-                                        <li>Online WebTiles App (by Brian Newtz)</li>
-                                        <li><a href="https://play.google.com/store/apps/details?id=com.newtzgames.dcssonline">
-                                            <img alt="Get it on Google Play"
-                                                 src="https://developer.android.com/images/brand/en_generic_rgb_wo_45.png" />
-                                             </a>
-                                        </li>
-                                        <li>Offline Tiles (0.16.1)</li>
-                                        <li><a href="release/crawl_tiles_android-0.16.1.apk">Download APK</a></li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <a href="https://play.google.com/store/apps/details?id=com.crawlmb">
+                                  <ul class="list-unstyled">
+                                    <li>Online WebTiles App (by Brian Newtz)</li>
+                                    <li><a href="https://play.google.com/store/apps/details?id=com.newtzgames.dcssonline">
                                         <img alt="Get it on Google Play"
                                              src="https://developer.android.com/images/brand/en_generic_rgb_wo_45.png" />
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Linux</th>
-                                <td colspan="2"><a href="#linux">See Instructions</a></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Source</th>
-                                <td colspan="2">
-                                  <ul class="list-unstyled">
-                                    <li><a href="release/stone_soup-0.16.2.tar.xz">Full source with dependencies</a></li>
-                                    <li><a href="http://crawl.develz.org/release/stone_soup-0.16.2-nodeps.tar.xz">Source without dependencies</a></li>
-                                    <li><a href="#source">See Git Instructions Below</a></li>
+                                      </a>
+                                    </li>
+                                    <li>Offline Tiles (0.16.1)</li>
+                                    <li><a href="release/crawl_tiles_android-0.16.1.apk">Download APK</a></li>
                                   </ul>
                                 </td>
+                                <td>
+                                  <a href="https://play.google.com/store/apps/details?id=com.crawlmb">
+                                    <img alt="Get it on Google Play"
+                                         src="https://developer.android.com/images/brand/en_generic_rgb_wo_45.png" />
+                                  </a>
+                                </td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Linux</th>
+                              <td colspan="2"><a href="#linux">See Instructions</a></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Source</th>
+                              <td colspan="2">
+                                <ul class="list-unstyled">
+                                  <li><a href="release/stone_soup-0.17.0.tar.xz">Full source with dependencies</a></li>
+                                  <li><a href="http://crawl.develz.org/release/stone_soup-0.17.0-nodeps.tar.xz">Source without dependencies</a></li>
+                                  <li><a href="#source">See Git Instructions Below</a></li>
+                                </ul>
+                              </td>
                             </tr>
                         </tbody>
                     </table>
@@ -102,7 +109,7 @@
                     <h4>Ubuntu, Debian &amp; other Debian derivatives</h4>
                     <p>DCSS packages are available for i386, amd64 and armel architectures. Follow these instructions:</p>
                     <pre># Install the source repository
-echo 'deb https://crawl.develz.org/debian crawl 0.16' | sudo tee -a /etc/apt/sources.list
+echo 'deb https://crawl.develz.org/debian crawl 0.17' | sudo tee -a /etc/apt/sources.list
 # Install the DCSS signing key
 wget https://crawl.develz.org/debian/pubkey -O - | sudo apt-key add -
 # update your package list
