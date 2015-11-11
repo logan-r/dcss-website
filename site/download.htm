@@ -102,17 +102,22 @@
                         </tbody>
                     </table>
 
-
                     <a name="linux"></a>
                     <h3>Linux</h3>
-                    <p>A version of DCSS may be available in your
-                    distribution's main package repository; look for the
-                    packages 'crawl' and/or 'crawl-tiles'. These packages tend
-                    to be for versions older than the current stable release,
-                    so use the stable-release packages below if you can.</p>
-                    <h4>Ubuntu, Debian &amp; other Debian derivatives</h4>
-                    <p>DCSS packages are available for i386, amd64 and armel architectures. Follow these instructions:</p>
-                    <pre># Install the source repository
+                        <p>
+                            A version of DCSS may be available in your
+                            distribution's main package repository; look for
+                            the packages 'crawl' and/or 'crawl-tiles'. These
+                            packages tend to be for versions older than the
+                            current stable release, so use the packages below
+                            if you can.
+                        </p>
+                        <h4>Ubuntu, Debian &amp; other Debian derivatives</h4>
+                        <p>
+                            DCSS packages are available for i386, amd64 and
+                            armel architectures. Follow these instructions:
+                        </p>
+                        <pre># Install the source repository
 echo 'deb https://crawl.develz.org/debian crawl 0.17' | sudo tee -a /etc/apt/sources.list
 # Install the DCSS signing key
 wget https://crawl.develz.org/debian/pubkey -O - | sudo apt-key add -
@@ -122,10 +127,13 @@ sudo apt-get update
 sudo apt-get install crawl
 # install tiles version
 sudo apt-get install crawl-tiles</pre>
-                    </ul>
-                    <h4>Fedora 23/22/21</h4>
-                    <p>BlasterBlade provides Fedora packages for Crawl in the openSUSE Build System repository. To install the tiles version, run the following:</p>
-                    <pre>cd /etc/yum.repos.d/
+                        <h4>Fedora 23/22/21</h4>
+                        <p>
+                            BlasterBlade provides Fedora packages for Crawl in
+                            the openSUSE Build System repository. To install
+                            the tiles version, run the following:
+                        </p>
+                        <pre>cd /etc/yum.repos.d/
 # Install the source repository
 sudo wget http://download.opensuse.org/repositories/home:nazar554/Fedora_23/home:nazar554.repo
 # Replace dnf with yum for Fedora 22/21
@@ -133,15 +141,16 @@ sudo wget http://download.opensuse.org/repositories/home:nazar554/Fedora_23/home
 sudo dnf install crawl-sdl crawl-data
 # install console version
 sudo dnf install crawl-console crawl-data</pre>
-
-                    <a name="source"></a>
-                    <h3>Source Code</h3>
-                    <p>To compile DCSS yourself, you can clone
-                    the <a href="https://github.com/crawl/crawl">git repository
-                    on github</a>. For help using git, see
-                    the <a href="https://github.com/crawl/crawl/blob/master/crawl-ref/docs/develop/git/quickstart.txt">quickstart
-                    guide</a>. For help compiling DCSS,
-                    see <a href="https://github.com/crawl/crawl/blob/master/crawl-ref/INSTALL.txt">INSTALL.txt</a>.</p>
+                        <a name="source"></a>
+                        <h3>Source Code</h3>
+                        <p>
+                            To compile DCSS yourself, you can clone
+                            the <a href="https://github.com/crawl/crawl">git
+                            repository on github</a>. For help using git, see
+                            the <a href="https://github.com/crawl/crawl/blob/master/crawl-ref/docs/develop/git/quickstart.txt">quickstart
+                            guide</a>. For help compiling DCSS,
+                            see <a href="https://github.com/crawl/crawl/blob/master/crawl-ref/INSTALL.txt">INSTALL.txt</a>.
+                        </p>
                 </div>
             </div>
             <hr>
