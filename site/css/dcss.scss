@@ -1,0 +1,92 @@
+$primary-color: #754F44;
+
+$header-font: 'Bubblegum Sans', 'Times New Roman';
+$base-font-size: 16px;
+
+
+
+/* Typography */
+* {
+    font-family: 'Roboto Slab', 'Times New Roman';
+}
+
+body, html {
+    font-size: $base-font-size !important;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+
+
+/* General elements */
+a {
+    color: $primary-color;
+    transition: color 0.6s ease;
+}
+
+a:hover {
+    color: rgba($primary-color, 0.5);
+}
+
+.button {
+    background: rgba(0, 0, 0, 0.3);
+    transition: border-color 0.6s, background-color 1.2s;
+}
+
+.button.is-outlined:hover, .button.is-outlined:active, .button.is-outlined:focus {
+    border-color: $primary-color;
+    background-color: rgba($primary-color, 0.7);
+}
+
+.button.is-outlined:active {
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.6);
+}
+
+
+
+/* Layout */
+.section {
+    .title {
+        font-family: $header-font;
+    }
+}
+
+.hero {
+    background: url("../bgimgs/herobg-final-2.png") !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+
+    .title {
+        font-family: 'Bubblegum Sans';
+        font-size: 2.5em;
+    }
+
+    .subtitle {
+        font-family: 'Walter Turncoat';
+    }
+
+    .button {
+        color: #fff;
+    }
+
+    #platforms {
+        padding-top: 18px;
+
+        a {
+            color: #fff;
+            margin-left: 12px;
+            margin-right: 12px;
+            transition: color 0.6s ease;
+        }
+
+        a:hover {
+            color: $primary-color;
+        }
+
+        .fa {
+            font-size: 2.5em !important;
+        }
+    }
+}

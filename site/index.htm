@@ -1,31 +1,70 @@
 <!DOCTYPE html>
+<html>
     <head>
         <title>Dungeon Crawl Stone Soup</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="canonical" href="<%= baseurl %>">
 
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/css/bootstrap-theme.min.css">
+        <link href='https://fonts.googleapis.com/css?family=Changa+One|Boogaloo|Bubblegum+Sans|Ceviche+One|Rancho|Neucha|Merienda:400,700|Merienda+One|Carter+One|Walter+Turncoat|Port+Lligat+Slab|Roboto+Slab|Slabo+13px|Arbutus+Slab' rel='stylesheet' type='text/css'><link href='https://fonts.googleapis.com/css?family=Changa+One|Boogaloo|Bubblegum+Sans|Ceviche+One|Rancho|Neucha|Merienda:400,700|Merienda+One|Carter+One|Walter+Turncoat|Port+Lligat+Slab|Roboto+Slab|Slabo+13px|Arbutus+Slab' rel='stylesheet' type='text/css'>
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/bulma.min.css">
+        <link rel="stylesheet" href="css/dcss.css">
 
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="js/dcss.js"></script>
     </head>
     <body>
-        <div class="container">
+        <section class="hero is-info is-large">
+            <div class="hero-content">
+                <div class="container">
+                    <h1 class="title">
+                        Dungeon Crawl: Stone Soup
+                    </h1>
+                    <h2 class="subtitle">
+                        A roguelike adventure through dangerous dungeons on a quest to find the mystifyingly fabulous Orb of Zot.
+                    </h2>
+
+                    <a class="button is-large is-outlined" href="play.htm">Play Online Now!</a>
+
+                    <br><br>
+
+                    Or download for:
+                    <div id="platforms">
+                        <a href="download.htm">
+                            <i class="fa fa-windows" title="Windows"></i>
+                        </a>
+                        <a href="download.htm">
+                            <i class="fa fa-apple" title="OS X"></i>
+                        </a>
+                        <a href="download.htm">
+                            <i class="fa fa-linux" title="Linux"></i>
+                        </a>
+                        <a href="download.htm">
+                            <i class="fa fa-android" title="Android"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="about">
+            <div class="container">
+                <h2 class="title">About DCSS...</h2>
+                <p>
+                    Dungeon Crawl Stone Soup is a free roguelike game of exploration and treasure-hunting in dungeons filled with dangerous and unfriendly monsters in a quest for the mystifyingly fabulous Orb of Zot.
+                </p>
+                <p>
+                    Dungeon Crawl Stone Soup has diverse species and many different character backgrounds to choose from, deep tactical game-play, sophisticated magic, religion and skill systems, and a grand variety of monsters to fight and run from, making each game unique and challenging.
+                </p>
+                <a>Read more &raquo;</a>
+            </div>
+        </section>
+        <!--div class="container">
             <div class="page-header">
                 <center>
                     <a href="./"><img class="img-responsive" src="logo.png" title="Dungeon Crawl Stone Soup" width="790px" height="152px"></a>
                 </center>
             </div>
-
-            <!-- mention free/open-source? -->
-            <p class="lead text-center">A roguelike adventure through dungeons filled with dangerous monsters in a quest to find the mystifyingly fabulous Orb of Zot.</p>
-            <center> <!-- XXX: HACKY!!!!! -->
-                <a href="play.htm" class="btn btn-lg btn-success" style="padding: 20px 32px; font-size: 24px;">Play Online Now!</a>
-                <br><br>
-                <p class="text-center"><a href="download.htm">Or download for Windows, OS X, Android or Linux.</a></p>
-            </center>
 
             <h2 class="text-center">Live games</h2>
             <div class="row" id="live-games-tiles"><p class="text-center">Loading...</p></div>
@@ -53,5 +92,6 @@
             <p class="small text-right">You are too berserk!</p>
 
         </div>
+    -->
     </body>
 </html>
