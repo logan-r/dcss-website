@@ -1,13 +1,15 @@
 $primary-color: #754F44;
+$secondary-light-color: #ccc;
 
 $header-font: 'Bubblegum Sans', 'Times New Roman';
+$body-font: 'Roboto Slab', 'Times New Roman';
 $base-font-size: 16px;
 
 
 
 /* Typography */
 * {
-    font-family: 'Roboto Slab', 'Times New Roman';
+    font-family: $body-font;
 }
 
 body, html {
@@ -48,8 +50,19 @@ a:hover {
 
 /* Layout */
 .section {
+    border-top-width: 0 !important;
+
     .title {
         font-family: $header-font;
+    }
+}
+
+.section.is-grey {
+    padding-top: 0;
+
+    .container {
+        padding-top: 40px;
+        border-top: 2px solid $secondary-light-color !important;
     }
 }
 
@@ -57,6 +70,7 @@ a:hover {
     background: url("../bgimgs/herobg-final-2.png") !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
+    background-color: #000 !important;
 
     .title {
         font-family: 'Bubblegum Sans';
@@ -87,6 +101,89 @@ a:hover {
 
         .fa {
             font-size: 2.5em !important;
+        }
+    }
+}
+
+
+
+/* Specific Elements */
+#now-playing-stats {
+    background: url("../bgimgs/bg2.png") !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-color: #000 !important;
+
+    * {
+        color: #fff;
+    }
+}
+
+#game-boxes {
+    > .columns {
+        margin-bottom: 20px;
+
+        > div {
+            text-align: center;
+            background-repeat: no-repeat !important;
+            background-position: center !important;
+            background-color: #000 !important;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            padding-left: 20px;
+            padding-right: 20px;
+            margin-right: 12px;
+            border: 1px solid #000;
+
+            .title {
+                color: #fff;
+                font-size: 1.2em;
+                margin-bottom: 30px;
+            }
+
+            .subtitle {
+                color: $secondary-light-color;
+                border-top: 2px solid #fff;
+                border-bottom: 2px solid #fff;
+                display: block;
+                font-size: 0.8em;
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+        }
+
+        .see-all-link {
+            border: 1px solid $primary-color;
+            background: #fff !important;
+            color: $primary-color !important;
+        }
+
+        > div:last-child {
+            margin-right: 0;
+        }
+    }
+
+    .columns:nth-child(1) {
+        > div:nth-child(1) {
+            background-image: url("../splashimgs/0.png") !important;
+        }
+
+        > div:nth-child(2) {
+            background-image: url("../splashimgs/1.png") !important;
+        }
+
+        > div:nth-child(3) {
+            background-image: url("../splashimgs/3.png") !important;
+        }
+    }
+
+    .columns:nth-child(2) {
+        > div:nth-child(1) {
+            background-image: url("../splashimgs/2.png") !important;
+        }
+
+        > div:nth-child(2) {
+            background-image: url("../splashimgs/8.png") !important;
         }
     }
 }

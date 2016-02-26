@@ -271,7 +271,7 @@ function networkError(error) {
 $(function() {
     // index.html
     if ($( "#live-games-tiles" ).length) {
-        $.get("dgl-status.json").done(setPlayerCaptions);
+        //$.get("dgl-status.json").done(setPlayerCaptions);
         $.get("//crawl.develz.org/wordpress/feed").done(updateFeed);
     }
     // play.html

@@ -1,6 +1,6 @@
 /* Typography */
 * {
-  font-family: 'Roboto Slab', 'Times New Roman'; }
+  font-family: "Roboto Slab", "Times New Roman"; }
 
 body, html {
   font-size: 16px !important; }
@@ -28,13 +28,22 @@ a:hover {
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.6); }
 
 /* Layout */
-.section .title {
-  font-family: "Bubblegum Sans", "Times New Roman"; }
+.section {
+  border-top-width: 0 !important; }
+  .section .title {
+    font-family: "Bubblegum Sans", "Times New Roman"; }
+
+.section.is-grey {
+  padding-top: 0; }
+  .section.is-grey .container {
+    padding-top: 40px;
+    border-top: 2px solid #ccc !important; }
 
 .hero {
   background: url("../bgimgs/herobg-final-2.png") !important;
   background-repeat: no-repeat !important;
-  background-position: center !important; }
+  background-position: center !important;
+  background-color: #000 !important; }
   .hero .title {
     font-family: 'Bubblegum Sans';
     font-size: 2.5em; }
@@ -53,5 +62,56 @@ a:hover {
       color: #754F44; }
     .hero #platforms .fa {
       font-size: 2.5em !important; }
+
+/* Specific Elements */
+#now-playing-stats {
+  background: url("../bgimgs/bg2.png") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-color: #000 !important; }
+  #now-playing-stats * {
+    color: #fff; }
+
+#game-boxes > .columns {
+  margin-bottom: 20px; }
+  #game-boxes > .columns > div {
+    text-align: center;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-color: #000 !important;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-right: 12px;
+    border: 1px solid #000; }
+    #game-boxes > .columns > div .title {
+      color: #fff;
+      font-size: 1.2em;
+      margin-bottom: 30px; }
+    #game-boxes > .columns > div .subtitle {
+      color: #ccc;
+      border-top: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      display: block;
+      font-size: 0.8em;
+      padding-top: 10px;
+      padding-bottom: 10px; }
+  #game-boxes > .columns .see-all-link {
+    border: 1px solid #754F44;
+    background: #fff !important;
+    color: #754F44 !important; }
+  #game-boxes > .columns > div:last-child {
+    margin-right: 0; }
+#game-boxes .columns:nth-child(1) > div:nth-child(1) {
+  background-image: url("../splashimgs/0.png") !important; }
+#game-boxes .columns:nth-child(1) > div:nth-child(2) {
+  background-image: url("../splashimgs/1.png") !important; }
+#game-boxes .columns:nth-child(1) > div:nth-child(3) {
+  background-image: url("../splashimgs/3.png") !important; }
+#game-boxes .columns:nth-child(2) > div:nth-child(1) {
+  background-image: url("../splashimgs/2.png") !important; }
+#game-boxes .columns:nth-child(2) > div:nth-child(2) {
+  background-image: url("../splashimgs/8.png") !important; }
 
 /*# sourceMappingURL=dcss.css.map */
