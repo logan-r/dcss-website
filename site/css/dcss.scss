@@ -5,6 +5,8 @@ $header-font: 'Bubblegum Sans', 'Times New Roman';
 $body-font: 'Roboto Slab', 'Times New Roman';
 $base-font-size: 16px;
 
+$pressed-shadow: inset 0 0 5px rgba(0, 0, 0, 0.9);
+
 
 
 /* Typography */
@@ -43,7 +45,7 @@ a:hover {
 }
 
 .button.is-outlined:active {
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.6);
+    box-shadow: $pressed-shadow;
 }
 
 
@@ -57,12 +59,12 @@ a:hover {
     }
 }
 
-.section.is-grey {
+.section.is-divided {
     padding-top: 0;
 
     .container {
         padding-top: 40px;
-        border-top: 2px solid $secondary-light-color !important;
+        border-top: 1px solid $secondary-light-color !important;
     }
 }
 
@@ -127,13 +129,14 @@ a:hover {
             text-align: center;
             background-repeat: no-repeat !important;
             background-position: center !important;
-            background-color: #000 !important;
             padding-top: 40px;
             padding-bottom: 40px;
             padding-left: 20px;
             padding-right: 20px;
             margin-right: 12px;
             border: 1px solid #000;
+            cursor: pointer;
+            background-blend-mode: lighten;
 
             .title {
                 color: #fff;
@@ -143,19 +146,33 @@ a:hover {
 
             .subtitle {
                 color: $secondary-light-color;
-                border-top: 2px solid #fff;
-                border-bottom: 2px solid #fff;
+                border-top: 1px solid #fff;
+                border-bottom: 1px solid #fff;
                 display: block;
                 font-size: 0.8em;
-                padding-top: 10px;
-                padding-bottom: 10px;
+                padding-top: 8px;
+                padding-bottom: 8px;
             }
         }
 
         .see-all-link {
             border: 1px solid $primary-color;
             background: #fff !important;
-            color: $primary-color !important;
+            color: $primary-color;
+            transition: color 0.6s, background-color 1.2s;
+        }
+
+        .see-all-link:hover, .see-all-link:active, .see-all-link:focus {
+            background: $primary-color !important;
+            color: #fff !important;
+        }
+
+        > div:hover, div:active, div:focus {
+            background-color: rgba($primary-color, 0.45);
+        }
+
+        > div:active {
+            box-shadow: $pressed-shadow;
         }
 
         > div:last-child {
@@ -165,25 +182,25 @@ a:hover {
 
     .columns:nth-child(1) {
         > div:nth-child(1) {
-            background-image: url("../splashimgs/0.png") !important;
+            background-image: url("../splashimgs/0.png");
         }
 
         > div:nth-child(2) {
-            background-image: url("../splashimgs/1.png") !important;
+            background-image: url("../splashimgs/1.png");
         }
 
         > div:nth-child(3) {
-            background-image: url("../splashimgs/3.png") !important;
+            background-image: url("../splashimgs/3.png");
         }
     }
 
     .columns:nth-child(2) {
         > div:nth-child(1) {
-            background-image: url("../splashimgs/2.png") !important;
+            background-image: url("../splashimgs/2.png");
         }
 
         > div:nth-child(2) {
-            background-image: url("../splashimgs/8.png") !important;
+            background-image: url("../splashimgs/8.png");
         }
     }
 }
