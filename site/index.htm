@@ -62,54 +62,7 @@
 
         <section class="section is-divided" id="live-games">
             <div class="container">
-                <h2 class="title">Latest News...</h2>
-                <div class="columns">
-                    <div class="column">
-                        <h3 class="title">
-                            A Brief History Of Buffness
-                        </h3>
-                        <span class="subtitle">
-                            Recently, I've been having many conversations about the same subject. People see that we've removed various buffs (spells that temporarily improve the player's stats - Stoneskin, Condensation Shield, ...
-                        </span>
-                    </div>
-                    <div class="column">
-                        <h3 class="title">
-                            Karagy the Slinger
-                        </h3>
-                        <span class="subtitle">
-                            Just entered the Ecumenical Temple
-                        </span>
-                    </div>
-                    <div class="column see-all-link" href="http://crawl.develz.org/wordpress/blog">
-                        <br>
-                        Read all news  &raquo;
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="now-playing-stats">
-            <div class="container">
-                <nav class="navbar">
-                    <div class="navbar-item is-text-centered">
-                        <p class="heading">Games Played This Year</p>
-                        <p class="title">123K</p>
-                    </div>
-                    <div class="navbar-item is-text-centered">
-                        <p class="heading">Games Won This Year</p>
-                        <p class="title">9,876</p>
-                    </div>
-                    <div class="navbar-item is-text-centered">
-                        <p class="heading">Current Live Games</p>
-                        <p class="title">123</p>
-                    </div>
-                </nav>
-            </div>
-        </section>
-
-        <section class="section" id="news">
-            <div class="container">
-                <h2 class="title">Live games...</h2>
+                <h2 class="title">Live Games...</h2>
                 <div id="game-boxes">
                     <div class="columns">
                         <div class="column game-box">
@@ -164,9 +117,64 @@
             </div>
         </section>
 
-        <section class="section is-divided" id="development">
+        <section class="section is-divided" id="community">
             <div class="container">
-                <h2 class="title">Development...</h2>
+                <h2 class="title">Help &amp; Community...</h2>
+                <div class="columns">
+                    <a class="column" href="download.htm">
+                        <i class="fa fa-search"></i>
+                        <h2>LearnDB</h2>
+                    </a>
+                    <a class="column" href="download.htm">
+                        <i class="fa fa-file-text-o"></i>
+                        <h2>Game Wiki</h2>
+                    </a>
+                    <a class="column" href="download.htm">
+                        <i class="fa fa-comments"></i>
+                        <h2>Forum</h2>
+                    </a>
+                    <a class="column" href="download.htm">
+                        <i class="fa fa-reddit"></i>
+                        <h2>/r/DCSS</h2>
+                    </a>
+                    <a class="column" href="download.htm">
+                        <i class="fa fa-hashtag"></i>
+                        <h2>IRC Channel</h2>
+                    </a>
+                    <a class="column" href="download.htm">
+                        <i class="fa fa-github"></i>
+                        <h2>Git Repo</h2>
+                    </a>
+                    <a class="column" href="download.htm">
+                        <i class="fa fa-bug"></i>
+                        <h2>Bug Reports</h2>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="now-playing-stats">
+            <div class="container">
+                <nav class="navbar">
+                    <div class="navbar-item is-text-centered">
+                        <p class="heading">Games Played This Year</p>
+                        <p class="title">123K</p>
+                    </div>
+                    <div class="navbar-item is-text-centered">
+                        <p class="heading">Games Won This Year</p>
+                        <p class="title">9,876</p>
+                    </div>
+                    <div class="navbar-item is-text-centered">
+                        <p class="heading">Current Live Games</p>
+                        <p class="title">123</p>
+                    </div>
+                </nav>
+            </div>
+        </section>
+
+        <section class="section" id="news">
+            <div class="container">
+                <h2 class="title">Latest News...</h2>
                 <p>
                     Dungeon Crawl Stone Soup is an open-sourced game.
                 </p>
@@ -174,6 +182,15 @@
         </section>
 
         <div id="live-games-tiles"></div>
+
+        <script>
+            $(".game-box").hover(function() {
+                $(this).data("subtitle", $(this).children(".subtitle").text());
+                $(this).children(".subtitle").text("Watch online");
+            }, function() {
+                $(this).children(".subtitle").text($(this).data("subtitle"));
+            });
+        </script>
         <!--div class="container">
             <div class="page-header">
                 <center>

@@ -14,7 +14,7 @@ a {
   transition: color 0.6s ease; }
 
 a:hover {
-  color: rgba(117, 79, 68, 0.5); }
+  color: rgba(117, 79, 68, 0.7); }
 
 .button {
   background: rgba(0, 0, 0, 0.3);
@@ -29,15 +29,16 @@ a:hover {
 
 /* Layout */
 .section {
-  border-top-width: 0 !important; }
+  border-top-width: 0 !important;
+  padding-top: 40px;
+  padding-bottom: 40px; }
   .section .title {
     font-family: "Bubblegum Sans", "Times New Roman"; }
 
 .section.is-divided {
   padding-top: 0; }
-  .section.is-divided .container {
-    padding-top: 40px;
-    border-top: 1px solid #ccc !important; }
+  .section.is-divided > .container {
+    padding-top: 20px; }
 
 .hero {
   background: url("../bgimgs/herobg-final-2.png") !important;
@@ -72,8 +73,26 @@ a:hover {
   #now-playing-stats * {
     color: #fff; }
 
-#game-boxes > .columns {
-  margin-bottom: 20px; }
+#community > .container > .title {
+  padding-bottom: 10px; }
+#community a {
+  text-align: center;
+  color: #69707a; }
+  #community a .fa {
+    font-size: 2em;
+    margin-bottom: 8px; }
+#community a:hover, #community a:active, #community a:focus {
+  color: #754F44; }
+
+#live-games > .container > .title {
+  margin-bottom: 30px; }
+
+#game-boxes {
+  margin-top: 20px; }
+  #game-boxes > .columns:not(:last-child) {
+    margin-bottom: 20px; }
+  #game-boxes > .columns:last-child {
+    margin-bottom: 0px; }
   #game-boxes > .columns > div {
     text-align: center;
     background-repeat: no-repeat !important;
@@ -82,10 +101,11 @@ a:hover {
     padding-bottom: 40px;
     padding-left: 20px;
     padding-right: 20px;
-    margin-right: 12px;
+    margin-right: 10px;
     border: 1px solid #000;
     cursor: pointer;
-    background-blend-mode: lighten; }
+    background-blend-mode: lighten;
+    transition: background-color 0.4s ease; }
     #game-boxes > .columns > div .title {
       color: #fff;
       font-size: 1.2em;
@@ -102,25 +122,27 @@ a:hover {
     border: 1px solid #754F44;
     background: #fff !important;
     color: #754F44;
-    transition: color 0.6s, background-color 1.2s; }
+    transition: color 0.4s, background-color 0.8s; }
   #game-boxes > .columns .see-all-link:hover, #game-boxes > .columns .see-all-link:active, #game-boxes > .columns .see-all-link:focus {
     background: #754F44 !important;
     color: #fff !important; }
   #game-boxes > .columns > div:hover, #game-boxes > .columns div:active, #game-boxes > .columns div:focus {
-    background-color: rgba(117, 79, 68, 0.45); }
+    background-color: rgba(117, 79, 68, 0.6); }
   #game-boxes > .columns > div:active {
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.9); }
+  #game-boxes > .columns > div:first-child {
+    margin-left: 7px; }
   #game-boxes > .columns > div:last-child {
-    margin-right: 0; }
-#game-boxes .columns:nth-child(1) > div:nth-child(1) {
-  background-image: url("../splashimgs/0.png"); }
-#game-boxes .columns:nth-child(1) > div:nth-child(2) {
-  background-image: url("../splashimgs/1.png"); }
-#game-boxes .columns:nth-child(1) > div:nth-child(3) {
-  background-image: url("../splashimgs/3.png"); }
-#game-boxes .columns:nth-child(2) > div:nth-child(1) {
-  background-image: url("../splashimgs/2.png"); }
-#game-boxes .columns:nth-child(2) > div:nth-child(2) {
-  background-image: url("../splashimgs/8.png"); }
+    margin-right: 7px; }
+  #game-boxes .columns:nth-child(1) > div:nth-child(1) {
+    background-image: url("../splashimgs/0.png"); }
+  #game-boxes .columns:nth-child(1) > div:nth-child(2) {
+    background-image: url("../splashimgs/1.png"); }
+  #game-boxes .columns:nth-child(1) > div:nth-child(3) {
+    background-image: url("../splashimgs/3.png"); }
+  #game-boxes .columns:nth-child(2) > div:nth-child(1) {
+    background-image: url("../splashimgs/2.png"); }
+  #game-boxes .columns:nth-child(2) > div:nth-child(2) {
+    background-image: url("../splashimgs/8.png"); }
 
 /*# sourceMappingURL=dcss.css.map */

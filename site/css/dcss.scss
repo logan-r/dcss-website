@@ -31,7 +31,7 @@ a {
 }
 
 a:hover {
-    color: rgba($primary-color, 0.5);
+    color: rgba($primary-color, 0.7);
 }
 
 .button {
@@ -53,6 +53,8 @@ a:hover {
 /* Layout */
 .section {
     border-top-width: 0 !important;
+    padding-top: 40px;
+    padding-bottom: 40px;
 
     .title {
         font-family: $header-font;
@@ -62,9 +64,8 @@ a:hover {
 .section.is-divided {
     padding-top: 0;
 
-    .container {
-        padding-top: 40px;
-        border-top: 1px solid $secondary-light-color !important;
+    > .container {
+        padding-top: 20px;
     }
 }
 
@@ -121,10 +122,44 @@ a:hover {
     }
 }
 
-#game-boxes {
-    > .columns {
-        margin-bottom: 20px;
+#community {
+    > .container > .title {
+        padding-bottom: 10px;
+    }
 
+    a {
+        text-align: center;
+        color: rgb(105, 112, 122);
+
+        .fa {
+            font-size: 2em;
+            margin-bottom: 8px;
+        }
+    }
+
+    a:hover, a:active, a:focus {
+        color: $primary-color;
+    }
+}
+
+#live-games {
+    > .container > .title {
+        margin-bottom: 30px;
+    }
+}
+
+#game-boxes {
+    margin-top: 20px;
+
+    > .columns:not(:last-child) {
+        margin-bottom: 20px;
+    }
+
+    > .columns:last-child {
+        margin-bottom: 0px;
+    }
+
+    > .columns {
         > div {
             text-align: center;
             background-repeat: no-repeat !important;
@@ -133,10 +168,11 @@ a:hover {
             padding-bottom: 40px;
             padding-left: 20px;
             padding-right: 20px;
-            margin-right: 12px;
+            margin-right: 10px;
             border: 1px solid #000;
             cursor: pointer;
             background-blend-mode: lighten;
+            transition: background-color 0.4s ease;
 
             .title {
                 color: #fff;
@@ -159,7 +195,7 @@ a:hover {
             border: 1px solid $primary-color;
             background: #fff !important;
             color: $primary-color;
-            transition: color 0.6s, background-color 1.2s;
+            transition: color 0.4s, background-color 0.8s;
         }
 
         .see-all-link:hover, .see-all-link:active, .see-all-link:focus {
@@ -168,15 +204,19 @@ a:hover {
         }
 
         > div:hover, div:active, div:focus {
-            background-color: rgba($primary-color, 0.45);
+            background-color: rgba($primary-color, 0.6);
         }
 
         > div:active {
             box-shadow: $pressed-shadow;
         }
 
+        > div:first-child {
+            margin-left: 7px;
+        }
+
         > div:last-child {
-            margin-right: 0;
+            margin-right: 7px;
         }
     }
 
