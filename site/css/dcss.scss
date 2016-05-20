@@ -1,4 +1,6 @@
 $primary-color: #754F44;
+$light-color: #fff;
+$dark-color: rgb(34, 35, 36);
 $secondary-light-color: #ccc;
 
 $header-font: 'Bubblegum Sans', 'Times New Roman';
@@ -48,6 +50,28 @@ a:hover {
     box-shadow: $pressed-shadow;
 }
 
+ul.block-list {
+    border: 1px solid $secondary-light-color;
+    display: block;
+    margin-bottom: 10px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1), 0 3px 4px rgba(0, 0, 0, 0.1);
+
+    li {
+        display: block;
+        padding: 10px 15px;
+        transition: color 0.4s, background-color 0.8s;
+        cursor: pointer;
+    }
+
+    li:hover {
+        background: $secondary-light-color;
+        color: $dark-color;
+    }
+
+    li:not(:last-child) {
+        border-bottom: 1px solid $secondary-light-color;
+    }
+}
 
 
 /* Layout */
@@ -59,6 +83,14 @@ a:hover {
     .title {
         font-family: $header-font;
     }
+}
+
+#jumbotron {
+    box-shadow: inset 0 -7px 9px -7px #999;
+}
+
+#now-playing-stats {
+    box-shadow: inset 0 7px 9px -7px #999, inset 0 -7px 9px -7px #999;
 }
 
 .section.is-divided {
@@ -112,7 +144,7 @@ a:hover {
 
 /* Specific Elements */
 #now-playing-stats {
-    background: url("../bgimgs/bg2.png") !important;
+    background: url("../bgimgs/bg2.png");
     background-repeat: no-repeat !important;
     background-position: center !important;
     background-color: #000 !important;
@@ -123,13 +155,21 @@ a:hover {
 }
 
 #community {
+    background: url("../bgimgs/cleaving_minotaur.png") !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;;
+    background-attachment: fixed !important;
+    background-color: #000 !important;
+    text-align: center;
+
     > .container > .title {
-        padding-bottom: 10px;
+        color: #fff;
+        padding-bottom: 15px;
     }
 
     a {
         text-align: center;
-        color: rgb(105, 112, 122);
+        color: #fff;
 
         .fa {
             font-size: 2em;
@@ -204,7 +244,7 @@ a:hover {
         }
 
         > div:hover, div:active, div:focus {
-            background-color: rgba($primary-color, 0.6);
+            background-color: rgba(#fff, 0.2);
         }
 
         > div:active {

@@ -14,14 +14,14 @@
         <script src="js/dcss.js"></script>
     </head>
     <body>
-        <section class="hero is-info is-large">
+        <section id="jumbotron" class="hero is-info is-large">
             <div class="hero-content">
                 <div class="container">
                     <h1 class="title">
                         Dungeon Crawl: Stone Soup
                     </h1>
                     <h2 class="subtitle">
-                        A roguelike adventure through dangerous dungeons on a quest to find the mystifyingly fabulous Orb of Zot.
+                        a classic roguelike adventure - find the Orb of Zot or die trying
                     </h2>
 
                     <a class="button is-large is-outlined" href="play.htm">Play Online Now!</a>
@@ -29,7 +29,7 @@
                     <br><br>
 
                     Or download for:
-                    <div id="platforms">
+                    <div id="platforms" class="is-unselectable">
                         <a href="download.htm">
                             <i class="fa fa-windows" title="Windows"></i>
                         </a>
@@ -47,7 +47,7 @@
             </div>
         </section>
 
-        <section class="section" id="about">
+        <section class="section is-inset-top" id="about">
             <div class="container">
                 <h2 class="title">About DCSS...</h2>
                 <p>
@@ -60,12 +60,12 @@
             </div>
         </section>
 
-        <section class="section is-divided" id="live-games">
+        <section class="section" id="live-games">
             <div class="container">
                 <h2 class="title">Live Games...</h2>
                 <div id="game-boxes">
                     <div class="columns">
-                        <div class="column game-box">
+                        <div class="column game-box is-unselectable">
                             <h3 class="title">
                                 genericpseudonym the Pandemonic
                             </h3>
@@ -73,7 +73,7 @@
                                 Level 18 Demonspawn Gladiator of Makhleb
                             </span>
                         </div>
-                        <div class="column game-box">
+                        <div class="column game-box is-unselectable">
                             <h3 class="title">
                                 RepHenryClay the Thaumaturge
                             </h3>
@@ -81,7 +81,7 @@
                                 Highest skill: Spellcasting
                             </span>
                         </div>
-                        <div class="column game-box">
+                        <div class="column game-box is-unselectable">
                             <h3 class="title">
                                 svendre the Unseen
                             </h3>
@@ -92,7 +92,7 @@
                     </div>
 
                     <div class="columns">
-                        <div class="column game-box">
+                        <div class="column game-box is-unselectable">
                             <h3 class="title">
                                 Piginabag the Meteorologist
                             </h3>
@@ -100,7 +100,7 @@
                                 On level 26 of a Ziggurat
                             </span>
                         </div>
-                        <div class="column game-box">
+                        <div class="column game-box is-unselectable">
                             <h3 class="title">
                                 Karagy the Slinger
                             </h3>
@@ -108,7 +108,7 @@
                                 Just entered the Ecumenical Temple
                             </span>
                         </div>
-                        <div class="column see-all-link" href="http://crawl.develz.org/wordpress/blog">
+                        <div class="column see-all-link is-unselectable" href="http://crawl.develz.org/wordpress/blog">
                             <br>
                             See all 123 online games  &raquo;
                         </div>
@@ -117,7 +117,53 @@
             </div>
         </section>
 
-        <section class="section is-divided" id="community">
+        <section class="section is-inset-bottom" id="about">
+            <div class="container">
+                <h2 class="title">About DCSS...</h2>
+                <p>
+                    Dungeon Crawl Stone Soup is a free roguelike game of exploration and treasure-hunting in dungeons filled with dangerous and unfriendly monsters in a quest for the mystifyingly fabulous Orb of Zot.
+                </p>
+                <p>
+                    Dungeon Crawl Stone Soup has diverse species and many different character backgrounds to choose from, deep tactical game-play, sophisticated magic, religion and skill systems, and a grand variety of monsters to fight and run from, making each game unique and challenging.
+                </p>
+                <a href="./wordpress/about">Learn more &raquo;</a>
+            </div>
+        </section>
+
+        <section class="section" id="now-playing-stats">
+            <div class="container">
+                <nav class="navbar">
+                    <div class="navbar-item is-text-centered">
+                        <p class="heading">Games Played This Year</p>
+                        <p class="title">123K</p>
+                    </div>
+                    <div class="navbar-item is-text-centered">
+                        <p class="heading">Games Won This Year</p>
+                        <p class="title">9,876</p>
+                    </div>
+                    <div class="navbar-item is-text-centered">
+                        <p class="heading">Current Live Games</p>
+                        <p class="title">123</p>
+                    </div>
+                </nav>
+            </div>
+        </section>
+
+        <section class="section is-inset-top" id="about">
+            <div class="container">
+                <h2 class="title">Latest News...</h2>
+                <ul class="block-list">
+                    <li>A Brief History of Buffness</li>
+                    <li>Trunk updates, 18 February 2016</li>
+                    <li>Trunk updates, 23 January 2016</li>
+                    <li>Trunk updates, 23 December 2015</li>
+                    <li>Crawl 0.17.1: Bugfix Release</li>
+                </ul>
+                <a href="./wordpress/about">More news &raquo;</a>
+            </div>
+        </section>
+
+        <!--section class="section" id="community">
             <div class="container">
                 <h2 class="title">Help &amp; Community...</h2>
                 <div class="columns">
@@ -153,35 +199,20 @@
             </div>
         </section>
 
-        <section class="section" id="now-playing-stats">
+        <section class="section" id="about">
             <div class="container">
-                <nav class="navbar">
-                    <div class="navbar-item is-text-centered">
-                        <p class="heading">Games Played This Year</p>
-                        <p class="title">123K</p>
-                    </div>
-                    <div class="navbar-item is-text-centered">
-                        <p class="heading">Games Won This Year</p>
-                        <p class="title">9,876</p>
-                    </div>
-                    <div class="navbar-item is-text-centered">
-                        <p class="heading">Current Live Games</p>
-                        <p class="title">123</p>
-                    </div>
-                </nav>
-            </div>
-        </section>
-
-        <section class="section" id="news">
-            <div class="container">
-                <h2 class="title">Latest News...</h2>
+                <h2 class="title">About DCSS...</h2>
                 <p>
-                    Dungeon Crawl Stone Soup is an open-sourced game.
+                    Dungeon Crawl Stone Soup is a free roguelike game of exploration and treasure-hunting in dungeons filled with dangerous and unfriendly monsters in a quest for the mystifyingly fabulous Orb of Zot.
                 </p>
+                <p>
+                    Dungeon Crawl Stone Soup has diverse species and many different character backgrounds to choose from, deep tactical game-play, sophisticated magic, religion and skill systems, and a grand variety of monsters to fight and run from, making each game unique and challenging.
+                </p>
+                <a href="./wordpress/about">Learn more &raquo;</a>
             </div>
         </section>
 
-        <div id="live-games-tiles"></div>
+        <div id="live-games-tiles"></div-->
 
         <script>
             $(".game-box").hover(function() {
