@@ -89,10 +89,6 @@ ul.block-list {
     box-shadow: inset 0 -7px 9px -7px #999;
 }
 
-#now-playing-stats {
-    box-shadow: inset 0 7px 9px -7px #999, inset 0 -7px 9px -7px #999;
-}
-
 .section.is-divided {
     padding-top: 0;
 
@@ -143,14 +139,15 @@ ul.block-list {
 
 
 /* Specific Elements */
-#now-playing-stats {
-    background: url("../bgimgs/bg2.png");
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    background-color: #000 !important;
+#accolades {
+    text-align: center;
+    box-shadow: inset 0 7px 9px -7px #999, inset 0 -7px 9px -7px #999;
+    background-color: #eee;
 
-    * {
-        color: #fff;
+    blockquote {
+        font-size: 1.2em;
+        margin-bottom: 4px;
+        color: #444;
     }
 }
 
