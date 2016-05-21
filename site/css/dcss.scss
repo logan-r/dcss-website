@@ -152,21 +152,20 @@ ul.block-list {
 }
 
 #community {
-    background: url("../bgimgs/cleaving_minotaur.png") !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;;
-    background-attachment: fixed !important;
-    background-color: #000 !important;
     text-align: center;
 
+    h2 {
+        text-align: left;
+    }
+
     > .container > .title {
-        color: #fff;
+        color: #444;
         padding-bottom: 15px;
     }
 
     a {
         text-align: center;
-        color: #fff;
+        color: #444;
 
         .fa {
             font-size: 2em;
@@ -176,6 +175,12 @@ ul.block-list {
 
     a:hover, a:active, a:focus {
         color: $primary-color;
+    }
+
+    .columns {
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        padding: 16px 0;
     }
 }
 

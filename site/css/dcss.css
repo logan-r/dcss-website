@@ -94,23 +94,24 @@ ul.block-list {
     color: #444; }
 
 #community {
-  background: url("../bgimgs/cleaving_minotaur.png") !important;
-  background-repeat: no-repeat !important;
-  background-position: center !important;
-  background-attachment: fixed !important;
-  background-color: #000 !important;
   text-align: center; }
+  #community h2 {
+    text-align: left; }
   #community > .container > .title {
-    color: #fff;
+    color: #444;
     padding-bottom: 15px; }
   #community a {
     text-align: center;
-    color: #fff; }
+    color: #444; }
     #community a .fa {
       font-size: 2em;
       margin-bottom: 8px; }
   #community a:hover, #community a:active, #community a:focus {
     color: #754F44; }
+  #community .columns {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 16px 0; }
 
 #live-games > .container > .title {
   margin-bottom: 30px; }
